@@ -49,6 +49,10 @@ export function DemoInterface() {
             }
 
             recognition.onerror = (event: any) => {
+                if (event.error === 'aborted') {
+                    // Ignore aborted error which happens when stopping
+                    return
+                }
                 console.error("Speech recognition error", event.error)
                 setIsListening(false)
             }
@@ -148,6 +152,7 @@ export function DemoInterface() {
                                 onChange={(e) => setInputValue(e.target.value)}
                                 placeholder={t("demo.placeholder")}
                                 className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
+                                suppressHydrationWarning={true}
                             />
                             <button className="rounded-full bg-amber-500 p-2 text-white transition-colors hover:bg-amber-600">
                                 <Send className="h-4 w-4" />

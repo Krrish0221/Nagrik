@@ -1,70 +1,62 @@
 "use client"
 
+import { useState } from "react"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-const schemes = [
-    {
-        title: "Atal Pension Yojana (APY)",
-        highlight: "Pension ₹1,000 - ₹5,000/mo",
-        desc: "Guaranteed pension for unorganized sector workers (Age 18-40). Spouse receives same pension on death.",
-    },
-    {
-        title: "PM Suraksha Bima Yojana (PMSBY)",
-        highlight: "₹2 Lakh Accident Cover",
-        desc: "Affordable accidental death & disability insurance for just ₹20 per annum. (Age 18-70).",
-    },
-    {
-        title: "PM Jeevan Jyoti Bima Yojana (PMJJBY)",
-        highlight: "₹2 Lakh Life Cover",
-        desc: "Pure term life insurance for death due to any reason. Premium ₹436/year. (Age 18-50).",
-    },
-    {
-        title: "PM Kisan Samman Nidhi",
-        highlight: "₹6,000/Year Support",
-        desc: "100% Govt funded financial support for farmers, transferred directly to bank accounts.",
-    },
-    {
-        title: "Ayushman Bharat (PM-JAY)",
-        highlight: "₹5 Lakh Health Cover",
-        desc: "Free health insurance coverage per family per year for secondary and tertiary care hospitalization.",
-    },
-    {
-        title: "PM Mitra Scheme",
-        highlight: "Textile Industry Growth",
-        desc: "Integrated large-scale textile regions to boost the \"Farm to Fiber to Factory to Fashion\" vision.",
-    },
-    {
-        title: "Kisan e-Mitra",
-        highlight: "AI Agriculture Assistant",
-        desc: "Your virtual assistant for agriculture queries. Available 24/7 with multilingual support.",
-    },
-]
+import { schemesData, type Scheme } from "@/lib/schemesData"
+import { SchemeModal } from "./scheme-modal"
 
 export function SchemeMarquee() {
+    const [selectedScheme, setSelectedScheme] = useState<Scheme | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const handleSchemeClick = (scheme: Scheme) => {
+        setSelectedScheme(scheme)
+        setIsModalOpen(true)
+    }
+
     return (
-        <section className="w-full overflow-hidden py-10">
-            <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-                <div className="group flex w-full overflow-hidden">
-                    <div className="flex min-w-full shrink-0 animate-marquee items-center justify-around gap-6 group-hover:[animation-play-state:paused]">
-                        {schemes.map((scheme, index) => (
-                            <SchemeCard key={`original-${index}`} scheme={scheme} />
-                        ))}
-                    </div>
-                    <div className="flex min-w-full shrink-0 animate-marquee items-center justify-around gap-6 group-hover:[animation-play-state:paused] ml-6">
-                        {schemes.map((scheme, index) => (
-                            <SchemeCard key={`duplicate-${index}`} scheme={scheme} />
-                        ))}
+        <>
+            <section className="w-full overflow-hidden py-10">
+                <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+                    <div className="group flex w-full overflow-hidden">
+                        <div className="flex min-w-full shrink-0 animate-marquee items-center justify-around gap-6 group-hover:[animation-play-state:paused]">
+                            {schemesData.map((scheme, index) => (
+                                <SchemeCard
+                                    key={`original-${index}`}
+                                    scheme={scheme}
+                                    onClick={() => handleSchemeClick(scheme)}
+                                />
+                            ))}
+                        </div>
+                        <div className="flex min-w-full shrink-0 animate-marquee items-center justify-around gap-6 group-hover:[animation-play-state:paused] ml-6">
+                            {schemesData.map((scheme, index) => (
+                                <SchemeCard
+                                    key={`duplicate-${index}`}
+                                    scheme={scheme}
+                                    onClick={() => handleSchemeClick(scheme)}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <SchemeModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                scheme={selectedScheme}
+            />
+        </>
     )
 }
 
-function SchemeCard({ scheme }: { scheme: typeof schemes[0] }) {
+function SchemeCard({ scheme, onClick }: { scheme: Scheme; onClick: () => void }) {
     return (
-        <div className="relative flex h-[220px] w-[350px] flex-col justify-between rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:shadow-2xl hover:border-amber-200/30">
+        <div
+            onClick={onClick}
+            className="relative flex h-[220px] w-[350px] flex-col justify-between rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:shadow-2xl hover:border-amber-200/30 cursor-pointer"
+        >
             <div>
                 <h3 className="mb-2 text-lg font-bold text-slate-900">{scheme.title}</h3>
                 <div className="mb-3 inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
