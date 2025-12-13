@@ -3,7 +3,9 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { X, ArrowRight, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
-import type { Scheme } from "@/lib/schemesData"
+import type { Scheme, SchemeContent } from "@/lib/schemesData"
+import { useLanguage } from "@/context/LanguageContext"
+import { translations } from "@/lib/translations"
 
 interface SchemeModalProps {
     isOpen: boolean
@@ -12,7 +14,12 @@ interface SchemeModalProps {
 }
 
 export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
+    const { language } = useLanguage()
+    const t = translations[language].schemes
+
     if (!scheme) return null
+
+    const content = (scheme[language] as SchemeContent) || scheme["en"]
 
     return (
         <AnimatePresence>
@@ -29,9 +36,10 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
 
                     {/* Modal */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
                         className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 p-4"
                     >
                         <div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-2xl">
@@ -45,17 +53,17 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
 
                             <div className="mt-2">
                                 <div className="mb-4 inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
-                                    {scheme.highlight}
+                                    {content.highlight}
                                 </div>
 
-                                <h2 className="text-2xl font-bold text-slate-900 mb-2">{scheme.title}</h2>
-                                <p className="text-slate-600 mb-6">{scheme.modal_content.summary}</p>
+                                <h2 className="text-2xl font-bold text-slate-900 mb-2">{content.title}</h2>
+                                <p className="text-slate-600 mb-6">{content.modal_content.summary}</p>
 
                                 {/* Highlights */}
                                 <div className="space-y-3 mb-8">
-                                    <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">Key Benefits</h3>
+                                    <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">{t.key_benefits}</h3>
                                     <ul className="space-y-2">
-                                        {scheme.modal_content.highlights.map((highlight, index) => (
+                                        {content.modal_content.highlights.map((highlight, index) => (
                                             <li key={index} className="flex items-start gap-2 text-slate-700">
                                                 <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
                                                 <span className="text-sm">{highlight}</span>
@@ -69,7 +77,7 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
                                     href={`/schemes/${scheme.id}`}
                                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3.5 font-semibold text-white shadow-lg transition-transform hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
                                 >
-                                    Read Full Guide
+                                    {t.read_full_guide}
                                     <ArrowRight className="h-5 w-5" />
                                 </Link>
                             </div>

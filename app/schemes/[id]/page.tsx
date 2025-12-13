@@ -3,13 +3,18 @@
 import { useParams } from "next/navigation"
 import { Navbar } from "@/components/ui/navbar"
 import { Footer } from "@/components/ui/footer"
-import { schemesData } from "@/lib/schemesData"
+import { schemesData, type SchemeContent } from "@/lib/schemesData"
 import Link from "next/link"
 import { ArrowLeft, FileText, CheckCircle2, HelpCircle, Bot } from "lucide-react"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/context/LanguageContext"
+import { translations } from "@/lib/translations"
 
 export default function SchemeDetailsPage() {
     const params = useParams()
+    const { language } = useLanguage()
+    const t = translations[language].schemes
+
     const scheme = schemesData.find((s) => s.id === params.id)
 
     if (!scheme) {
@@ -27,6 +32,8 @@ export default function SchemeDetailsPage() {
         )
     }
 
+    const content = (scheme[language] as SchemeContent) || scheme["en"]
+
     return (
         <main className="min-h-screen bg-slate-50">
             <Navbar />
@@ -41,7 +48,7 @@ export default function SchemeDetailsPage() {
                         className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors"
                     >
                         <ArrowLeft className="h-4 w-4 mr-2" />
-                        Back to Home
+                        {t.back_to_home}
                     </Link>
 
                     <motion.div
@@ -50,10 +57,10 @@ export default function SchemeDetailsPage() {
                         transition={{ duration: 0.5 }}
                     >
                         <div className="inline-block rounded-full bg-amber-500/20 px-3 py-1 text-sm font-semibold text-amber-300 border border-amber-500/30 mb-4">
-                            {scheme.highlight}
+                            {content.highlight}
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{scheme.title}</h1>
-                        <p className="text-xl text-slate-300 max-w-2xl">{scheme.modal_content.summary}</p>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{content.title}</h1>
+                        <p className="text-xl text-slate-300 max-w-2xl">{content.modal_content.summary}</p>
                     </motion.div>
                 </div>
             </section>
@@ -71,14 +78,14 @@ export default function SchemeDetailsPage() {
                         >
                             <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
                                 <FileText className="h-6 w-6 text-amber-600 mr-3" />
-                                Overview
+                                {t.overview}
                             </h2>
-                            <p className="text-slate-600 leading-relaxed text-lg">{scheme.desc}</p>
+                            <p className="text-slate-600 leading-relaxed text-lg">{content.long_description}</p>
 
                             <div className="mt-8">
-                                <h3 className="font-semibold text-slate-900 mb-4">Key Highlights</h3>
+                                <h3 className="font-semibold text-slate-900 mb-4">{t.key_highlights}</h3>
                                 <div className="grid sm:grid-cols-2 gap-4">
-                                    {scheme.modal_content.highlights.map((item, i) => (
+                                    {content.modal_content.highlights.map((item, i) => (
                                         <div key={i} className="flex items-center text-slate-600 bg-slate-50 p-3 rounded-lg">
                                             <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 shrink-0" />
                                             {item}
@@ -97,11 +104,30 @@ export default function SchemeDetailsPage() {
                         >
                             <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
                                 <HelpCircle className="h-6 w-6 text-amber-600 mr-3" />
-                                Application Process
+                                {t.application_process}
                             </h2>
-                            <div className="prose prose-slate max-w-none">
-                                <p className="text-slate-600 text-lg">{scheme.full_page_content.process}</p>
+                            <div className="space-y-4">
+                                {content.full_page_content.application_steps.map((step, index) => (
+                                    <div key={index} className="flex gap-4">
+                                        <div className="flex-none flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-bold text-sm">
+                                            {index + 1}
+                                        </div>
+                                        <p className="text-slate-600 text-lg flex-1 pt-0.5">{step.replace(/^\d+\.\s*/, '')}</p>
+                                    </div>
+                                ))}
                             </div>
+
+                            {content.full_page_content.important_note && (
+                                <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-xl flex gap-3 text-amber-800">
+                                    <div className="shrink-0 mt-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+                                    </div>
+                                    <div>
+                                        <span className="font-bold block mb-1">{t.important}:</span>
+                                        <p className="font-medium text-sm">{content.full_page_content.important_note}</p>
+                                    </div>
+                                </div>
+                            )}
                         </motion.div>
                     </div>
 
@@ -114,9 +140,9 @@ export default function SchemeDetailsPage() {
                             transition={{ delay: 0.3 }}
                             className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
                         >
-                            <h3 className="text-lg font-bold text-slate-900 mb-4">Documents Required</h3>
+                            <h3 className="text-lg font-bold text-slate-900 mb-4">{t.documents_required}</h3>
                             <ul className="space-y-3">
-                                {scheme.full_page_content.documents.map((doc, i) => (
+                                {content.full_page_content.documents.map((doc, i) => (
                                     <li key={i} className="flex items-start">
                                         <div className="h-2 w-2 rounded-full bg-amber-500 mt-2 mr-3 shrink-0" />
                                         <span className="text-slate-600">{doc}</span>
@@ -132,9 +158,9 @@ export default function SchemeDetailsPage() {
                             transition={{ delay: 0.4 }}
                             className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
                         >
-                            <h3 className="text-lg font-bold text-slate-900 mb-4">Eligibility Criteria</h3>
+                            <h3 className="text-lg font-bold text-slate-900 mb-4">{t.eligibility_criteria}</h3>
                             <ul className="space-y-3">
-                                {scheme.full_page_content.eligibility.map((item, i) => (
+                                {content.full_page_content.eligibility_detailed.map((item, i) => (
                                     <li key={i} className="flex items-start">
                                         <CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" />
                                         <span className="text-slate-600">{item}</span>
@@ -155,13 +181,13 @@ export default function SchemeDetailsPage() {
                             </div>
                             <h3 className="text-xl font-bold mb-4 flex items-center relative z-10">
                                 <Bot className="h-6 w-6 mr-2" />
-                                How Nagrik Helps
+                                {t.how_nagrik_helps}
                             </h3>
                             <p className="text-amber-50 relative z-10 text-lg leading-relaxed mb-6">
-                                {scheme.full_page_content.nagrik_support}
+                                {content.full_page_content.nagrik_support}
                             </p>
                             <button className="w-full bg-white text-amber-600 font-bold py-3 px-4 rounded-xl shadow-lg hover:bg-amber-50 transition-colors relative z-10">
-                                Ask Nagrik Now
+                                {t.ask_nagrik_now}
                             </button>
                         </motion.div>
                     </div>
