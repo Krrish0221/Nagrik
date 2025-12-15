@@ -6,7 +6,11 @@ import { Mic, MicOff } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 
-export function Hero() {
+interface HeroProps {
+    onVoiceTrigger?: (text: string) => void
+}
+
+export function Hero({ onVoiceTrigger }: HeroProps) {
     const [isListening, setIsListening] = useState(false)
     const [transcript, setTranscript] = useState("")
     const recognitionRef = useRef<any>(null)
@@ -40,6 +44,14 @@ export function Hero() {
         if (isListening) {
             recognitionRef.current?.stop()
             setIsListening(false)
+            if (transcript && onVoiceTrigger) {
+                onVoiceTrigger(transcript)
+                // Smooth scroll to chat widget
+                const chatWidget = document.getElementById('nagrik-chat-widget')
+                if (chatWidget) {
+                    chatWidget.scrollIntoView({ behavior: 'smooth' })
+                }
+            }
         } else {
             setTranscript("")
             try {
@@ -47,7 +59,6 @@ export function Hero() {
                 setIsListening(true)
             } catch (error) {
                 console.error("Speech recognition error:", error)
-                // If already started, just set state to true
                 setIsListening(true)
             }
         }
