@@ -19,7 +19,7 @@ export function Footer() {
                     <p className="text-sm font-medium text-slate-900">
                         {t("footer.madeWith")}
                         <span className="block text-xs font-normal text-slate-500">
-                            (Krish, Akshar, Avinash)
+                            (Krish, Avinash, Akshar)
                         </span>
                     </p>
                     <p className="text-xs text-slate-400">

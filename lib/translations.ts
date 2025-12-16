@@ -798,6 +798,7 @@ export const translations = {
             chat3: "ਮੈਂ ਉਸ ਵਿੱਚ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ। ਤੁਸੀਂ ਕਿਹੜੇ ਪਿੰਡ ਤੋਂ ਹੋ?",
             placeholder: "ਟਾਈਪ ਕਰੋ ਜਾਂ ਬੋਲੋ...",
         },
+
         schemes: {
             know_more: "ਹੋਰ ਜਾਣੋ",
             overview: "ਸੰਖੇਪ ਜਾਣਕਾਰੀ",
@@ -944,6 +945,69 @@ export const translations = {
             poweredBy: "भाषिणी आ डिजीलॉकर द्वारा संचालित",
         },
     },
+    sa: {
+        navbar: {
+            logo: "नागरिकः",
+            login: "DigiLocker द्वारा प्रविशतु",
+            language: "संस्कृतम्",
+        },
+        hero: {
+            title: "सर्वकारः भवता सह,",
+            subtitle: "ध्वन्या सह",
+            description: "लक्षशः जनानां कृते डिजिटल-अन्तरं दूरीकरोति। स्वाधिकाराय वदतु।",
+            tapToSpeak: "वक्तुं स्पृशतु",
+            listening: "शृणोमि...",
+        },
+        bento: {
+            heading: "किमर्थं नागरिकः?",
+            subheading: "सरलतायै निर्मितः, सर्वेभ्यः अभिकल्पितः।",
+            voiceNav: {
+                title: "ध्वनि-प्रथम-संचालनम्",
+                desc: "टंकणस्य आवश्यकता नास्ति। केवलं वदतु।",
+            },
+            digilocker: {
+                title: "DigiLocker सत्यापितम्",
+                desc: "सद्यः प्रलेख-अभिगमः सत्यापनं च।",
+            },
+            autoFill: {
+                title: "स्वतः-पूरण-पत्राणि",
+                desc: "AI भवतः कृते जटिलपत्राणि स्वयमेव पूरयति।",
+            },
+            vernacular: {
+                title: "प्रादेशिक-भाषा-समर्थनम्",
+                desc: "हिन्दी-भोजपुरी-सहितं 12+ भारतीयभाषाः वदति।",
+            },
+        },
+        demo: {
+            heading: "सरलताम् अनुभवतु",
+            subheading: "केवलम् पृच्छतु, नागरिकः भवन्तं सर्वत्र मार्गदर्शयति।",
+            assistantName: "नागरिक-सहायकः",
+            status: "सक्रियः • ध्वनि-सक्रियः",
+            chat1: "नमस्ते! अद्य अहं कथं साहाय्यं कर्तुं शक्नोमि?",
+            chat2: "अहं रेशन-पत्रं कथं प्राप्नोमि?",
+            chat3: "अहं तत्र साहाय्यं कर्तुं शक्नोमि। भवान् कस्मात् ग्रामात् अस्ति?",
+            placeholder: "लिखतु वा वदतु...",
+        },
+        schemes: {
+            know_more: "अधिकं जानातु",
+            overview: "सिंहावलोकनम्",
+            key_highlights: "मुख्य-अंशाः",
+            application_process: "आवेदन-प्रक्रिया",
+            documents_required: "आवश्यक-प्रलेखाः",
+            eligibility_criteria: "पात्रता-निकषाः",
+            important: "महत्त्वपूर्णम्",
+            how_nagrik_helps: "नागरिकः कथं साहाय्यं करोति",
+            ask_nagrik_now: "नागरिकम् अधुना पृच्छतु",
+            read_full_guide: "सम्पूर्ण-मार्गदर्शिकां पठतु",
+            key_benefits: "मुख्य-लाभाः",
+            back_to_home: "गृहं प्रति निवर्ततु",
+        },
+        footer: {
+            tagline: "ध्वनि-AI द्वारा ग्रामीण-भारतस्य सशक्तीकरणम्।",
+            madeWith: "Team TRIO CORE द्वारा ❤️ सस्नेहं निर्मितम्",
+            poweredBy: "भाषिनी तथा DigiLocker द्वारा संचालितम्",
+        },
+    },
 };
 
-export type Language = "en" | "hi" | "gu" | "bho" | "ta" | "bn" | "mr" | "te" | "ur" | "kn" | "or" | "ml" | "pa" | "as" | "mai";
+export type Language = "en" | "hi" | "gu" | "bho" | "ta" | "bn" | "mr" | "te" | "ur" | "kn" | "or" | "ml" | "pa" | "as" | "mai" | "sa";

@@ -16,62 +16,100 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
     const [isListening, setIsListening] = useState(false)
     const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [fileProcessing, setFileProcessing] = useState(false) // New state for file upload
 
-    // Handle voice trigger handover
+    // Handle voice trigger handover (unchanged)
     useEffect(() => {
-        // Only run if there is actual text
         if (voiceTrigger && voiceTrigger.trim() !== "") {
-            console.log("Voice received:", voiceTrigger); // Debugging check
-
-            // 1. VISUAL UPDATE: Put text in the box immediately
+            console.log("Voice received:", voiceTrigger);
             setInputValue(voiceTrigger)
-            setIsListening(false) // Stop local listening if active
-
-            // 2. ACTION: Wait 1s, then send
+            setIsListening(false)
             const timer = setTimeout(() => {
-                // Call handleSend with the specific text to ensure it works
                 handleSend(voiceTrigger)
-                // Reset the trigger so it doesn't loop
                 if (onVoiceTriggerClear) onVoiceTriggerClear()
             }, 1000)
-
             return () => clearTimeout(timer)
         }
     }, [voiceTrigger, onVoiceTriggerClear])
 
-    // Modify the function to accept an optional 'manualText' argument
+    // File Upload Handler
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setFileProcessing(true);
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            // Send to upload API
+            const response = await fetch("/api/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (data.text) {
+                // Add extracted text to context silently? Or just send it as a message?
+                // For this hackathon, let's auto-send it as a user message so the AI knows about it.
+                // Or better, set it as input value or just inject it.
+                // Let's inject it into the message history visibly.
+                const fileContextMsg = `[Analyzed File: ${file.name}]\n${data.text.substring(0, 1000)}...`; // Truncate for display, but could be full in backend context
+
+                // Better approach: Send it as a special system/context message or just a user message
+                // "I am uploading this file: [content]"
+                const hiddenContent = `I have uploaded a file named ${file.name}. Here is its content:\n\n${data.text}\n\nAnalyze this document.`;
+                handleSend(hiddenContent); // Send automatically
+
+            } else {
+                console.error("File processing failed:", data.error);
+                alert("Failed to process file. Please try again.");
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Error uploading file.");
+        } finally {
+            setFileProcessing(false);
+            // Reset input
+            e.target.value = "";
+        }
+    };
+
     const handleSend = async (manualText: string | null = null) => {
-        // 1. Determine the actual message to send
-        // If manualText is a string, use it. Otherwise, use the 'input' state.
         const messageContent = (typeof manualText === 'string' && manualText.length > 0)
             ? manualText
             : inputValue
 
-        // 2. Validation: If both are empty, stop here.
         if (!messageContent || !messageContent.trim()) return
 
-        // 3. Clear UI immediately 
         setInputValue("")
 
-        // Add user message to state
-        setMessages(prev => [...prev, { role: 'user', content: messageContent }])
-        setIsLoading(true)
+        // Don't show the huge full text in the UI if it's a file upload (detected by length/prefix)
+        const displayContent = messageContent.startsWith("I have uploaded a file named")
+            ? `📂 Uploaded Document`
+            : messageContent;
 
+        setMessages(prev => [...prev, { role: 'user', content: displayContent }])
         // 4. Add User Message to Chat History (Simulated for demo)
         console.log("Sending message:", messageContent)
 
         try {
-            const response = await fetch('/api/chat', {
+            // Changed to Python Backend URL
+            const response = await fetch('http://127.0.0.1:5000/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ message: messageContent }),
+                body: JSON.stringify({
+                    topic: messageContent, // Changed 'message' to 'topic' for Python API
+                    language: language // Pass selected language
+                }),
             });
 
             // FIX: Read text first to debug HTML errors
             const rawText = await response.text();
-            console.log("Raw API Response:", rawText);
+            // console.log("Raw API Response:", rawText);
 
             let data;
             try {
@@ -79,7 +117,6 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
             } catch (jsonError) {
                 console.error("Failed to parse JSON:", jsonError);
                 console.error("Received Content:", rawText);
-                // Create a fake error object to show in UI or just return
                 data = { error: "Invalid server response. Check console." };
             }
 
@@ -87,13 +124,13 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                 setMessages(prev => [...prev, { role: 'assistant', content: data["AI-response"] }])
             } else if (data && data.error) {
                 console.error("API Error:", data.error)
-                // Optionally show error in UI
             } else if (data && data.Status === "error") {
                 console.error("API Returned Error Status:", data)
             }
 
         } catch (error) {
             console.error("Failed to send message:", error)
+            setMessages(prev => [...prev, { role: 'assistant', content: "⚠️ Connection Error: Unable to reach the server. Please ensure the backend is running on port 5000." }])
         } finally {
             setIsLoading(false)
         }
@@ -116,6 +153,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
         pa: 'pa-IN',
         as: 'as-IN',
         mai: 'hi-IN', // Fallback to Hindi
+        sa: 'sa-IN'
     }
 
     const startListening = () => {
@@ -139,7 +177,6 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
 
             recognition.onerror = (event: any) => {
                 if (event.error === 'aborted' || event.error === 'no-speech') {
-                    // Ignore aborted and no-speech errors
                     return
                 }
                 console.error("Speech recognition error", event.error)
@@ -224,7 +261,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             </motion.div>
                         ))}
 
-                        {isLoading && (
+                        {(isLoading || fileProcessing) && (
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -234,6 +271,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                     <span className="animate-bounce">.</span>
                                     <span className="animate-bounce delay-100">.</span>
                                     <span className="animate-bounce delay-200">.</span>
+                                    {fileProcessing && <span className="ml-2 text-xs text-slate-400">Processing File...</span>}
                                 </div>
                             </motion.div>
                         )}
@@ -255,6 +293,20 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                     {/* Input Area */}
                     <div className="border-t border-slate-100 bg-white p-4">
                         <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2">
+                            {/* File Upload Button */}
+                            <label className="cursor-pointer p-2 rounded-full hover:bg-slate-200 text-slate-400 transition-colors">
+                                <input
+                                    type="file"
+                                    className="hidden"
+                                    accept=".pdf,image/png,image/jpeg,image/jpg"
+                                    onChange={handleFileUpload}
+                                    disabled={fileProcessing || isLoading}
+                                />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform rotate-45">
+                                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                                </svg>
+                            </label>
+
                             <button
                                 onClick={startListening}
                                 className={`rounded-full p-2 transition-colors ${isListening ? 'bg-red-100 text-red-600' : 'hover:bg-slate-200 text-slate-400'}`}
@@ -272,10 +324,12 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                 placeholder={t("demo.placeholder")}
                                 className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
                                 suppressHydrationWarning={true}
+                                disabled={fileProcessing}
                             />
                             <button
                                 onClick={() => handleSend()}
-                                className="rounded-full bg-amber-500 p-2 text-white transition-colors hover:bg-amber-600"
+                                className="rounded-full bg-amber-500 p-2 text-white transition-colors hover:bg-amber-600 disabled:bg-amber-300"
+                                disabled={fileProcessing}
                             >
                                 <Send className="h-4 w-4" />
                             </button>
