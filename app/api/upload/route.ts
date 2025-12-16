@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
-import pdf from 'pdf-parse';
+import * as pdfLib from 'pdf-parse';
+// @ts-ignore
+const pdf = pdfLib.default || pdfLib;
 import Tesseract from 'tesseract.js';
 
 export async function POST(req: Request) {
