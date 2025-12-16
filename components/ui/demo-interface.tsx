@@ -96,7 +96,8 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
 
         try {
             // Changed to Python Backend URL
-            const response = await fetch('http://127.0.0.1:5000/', {
+            // Changed to relative URL for Vercel/Local support via proxy/rewrites
+            const response = await fetch('/api/py', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
