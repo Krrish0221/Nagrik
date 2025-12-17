@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nagrik - AI Government Assistant
 
-## Getting Started
+Nagrik is a next-generation platform designed to simplify access to government schemes and services. It features a powerful AI assistant ("Nagrik AI") that provides real-time, context-aware answers to user queries in multiple languages.
 
-First, run the development server:
+## 🚀 Key Features
+
+*   **Hybrid Architecture**: Fast **Next.js** frontend coupled with a robust **Python Flask** backend.
+*   **Nagrik AI**: An intelligent chat assistant powered by **OpenAI/Groq**, capable of answering complex questions about government schemes.
+*   **Smart UI/UX**:
+    *   **Premium Animations**: Bouncy, slide-in message effects for a modern feel.
+    *   **Reading Mode Scroll**: Auto-scrolls to the *start* of the answer or frames the *User Question*, ensuring context is never lost.
+    *   **High-Contrast Indicators**: Clear typing indicators for better visibility.
+*   **Multi-Language Support**: Built with localization in mind to serve diverse demographics.
+
+## 🛠️ Architecture
+
+*   **Frontend**: Next.js 15 (App Router), React, Tailwind CSS, Framer Motion.
+*   **Backend**: Python Flask, OpenAI API (Groq).
+*   **Data**: JSON-based scheme data storage.
+
+## 📦 Getting Started
+
+### Prerequisites
+
+*   Node.js (v18+)
+*   Python (v3.8+)
+*   API Key (OpenAI or Groq)
+
+### 1. Backend Setup
+
+The backend handles AI processing and API requests.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Navigate to the project root
+# Install dependencies
+pip install -r requirements.txt
+
+# Create a .env file in the root directory and add your key:
+# OPEN_AI_KEY=your_api_key_here
+
+# Run the Python Server
+python api/py.py
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*The server will start on `http://localhost:5000`.*
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. Frontend Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The frontend provides the user interface.
 
-## Learn More
+```bash
+# Install Node dependencies
+npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Run the development server
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+*The app will be available at `http://localhost:3000`.*
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🌟 Usage
 
-## Deploy on Vercel
+1.  Open the app in your browser.
+2.  Click on the Chat Widget to open **Nagrik AI**.
+3.  Ask a question (e.g., *"How do I apply for a passport?"*).
+4.  Observe the premium animations and smart scrolling as the AI responds!
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🤝 Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Please feel free to verify the backend logic in `api/py.py` or tweak the UI animations in `app/globals.css`.
+
+---
+*Built with ❤️ for the Nagrik Hackathon 2025*
