@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { Send, Mic } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 interface DemoInterfaceProps {
     voiceTrigger?: string | null
@@ -17,6 +17,37 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
     const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [fileProcessing, setFileProcessing] = useState(false) // New state for file upload
+    const chatContainerRef = useRef<HTMLDivElement>(null)
+    const lastMessageRef = useRef<HTMLDivElement>(null)
+
+    // Auto-scroll effect
+    // Auto-scroll effect: Frame the Conversation
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            // WAIT 300ms (crucial for animations to finish expanding)
+            setTimeout(() => {
+                const chatBox = chatContainerRef.current;
+
+                // 3. Find the User's last message (The Question)
+                const lastUserMsg = chatBox?.querySelectorAll('.user-message');
+                const targetMsg = lastUserMsg && lastUserMsg.length > 0 ? lastUserMsg[lastUserMsg.length - 1] : lastMessageRef.current;
+
+                if (chatBox && targetMsg) {
+                    // 4. Get the absolute position relative to the container
+                    const targetTop = (targetMsg as HTMLElement).offsetTop;
+
+                    // 5. Scroll to the Question MINUS 120px (for the Header)
+                    // This forces the Question to be at the top, followed immediately by the answer.
+                    chatBox.scrollTo({
+                        top: targetTop - 120,
+                        behavior: 'smooth'
+                    });
+
+                    console.log("Scrolled to frame User Question at:", targetTop - 120);
+                }
+            }, 300);
+        }
+    }, [messages]);
 
     // Handle voice trigger handover (unchanged)
     useEffect(() => {
@@ -208,7 +239,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
 
                 <div className="mx-auto max-w-md overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
                     {/* Header */}
-                    <div className="flex items-center gap-3 border-b border-slate-100 bg-slate-50 p-4">
+                    <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-slate-100 bg-slate-50 p-4">
                         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-600">
                             <span className="font-bold">N</span>
                         </div>
@@ -219,7 +250,10 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                     </div>
 
                     {/* Chat Area */}
-                    <div className="flex h-[400px] flex-col gap-4 bg-stone-50/50 p-4 overflow-y-auto">
+                    <div
+                        ref={chatContainerRef}
+                        className="flex h-[400px] flex-col gap-4 bg-stone-50/50 p-4 overflow-y-auto"
+                    >
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -252,29 +286,20 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
 
                         {/* Dynamic Messages */}
                         {messages.map((msg, idx) => (
-                            <motion.div
+                            <div
                                 key={idx}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className={`self-${msg.role === 'user' ? 'end' : 'start'} rounded-2xl ${msg.role === 'user' ? 'rounded-tr-none bg-amber-500 text-white' : 'rounded-tl-none bg-white text-slate-800'} px-4 py-3 shadow-sm`}
+                                ref={idx === messages.length - 1 ? lastMessageRef : null}
+                                className={`message-bubble self-${msg.role === 'user' ? 'end' : 'start'} rounded-2xl ${msg.role === 'user' ? 'user-message rounded-tr-none bg-amber-500 text-white' : 'ai-message rounded-tl-none bg-white text-slate-800'} px-4 py-3 shadow-sm`}
                             >
                                 <p className="whitespace-pre-wrap">{msg.content}</p>
-                            </motion.div>
+                            </div>
                         ))}
 
                         {(isLoading || fileProcessing) && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                className="self-start rounded-2xl rounded-tl-none bg-white px-4 py-3 text-slate-800 shadow-sm"
-                            >
-                                <div className="flex gap-1">
-                                    <span className="animate-bounce">.</span>
-                                    <span className="animate-bounce delay-100">.</span>
-                                    <span className="animate-bounce delay-200">.</span>
-                                    {fileProcessing && <span className="ml-2 text-xs text-slate-400">Processing File...</span>}
-                                </div>
-                            </motion.div>
+                            <div className="typing-indicator" id="ai-loader">
+                                <span></span><span></span><span></span>
+                                {fileProcessing && <div className="text-xs text-slate-400 mt-1">Processing File...</div>}
+                            </div>
                         )}
 
 

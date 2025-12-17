@@ -61,6 +61,7 @@
     from {
       transform: translateX(0);
     }
+
     to {
       transform: translateX(-100%);
     }
@@ -200,5 +201,87 @@
       100% 100%;
     filter: blur(30px);
     transform: scale(1.2);
+  }
+}
+
+@layer utilities {
+
+  /* Dramatic Entry Animation */
+  @keyframes popIn {
+    0% {
+      opacity: 0;
+      transform: translateY(50px) scale(0.9);
+      /* Start lower and smaller */
+    }
+
+    70% {
+      transform: translateY(-10px) scale(1.02);
+      /* Overshoot slightly (bounce) */
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      /* Settle */
+    }
+  }
+
+  /* Apply to all message bubbles */
+  .message-bubble,
+  .user-message,
+  .ai-message {
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+    /* Bouncy effect */
+    scroll-margin-top: 150px;
+    /* Reading Mode Buffer */
+  }
+
+  .typing-indicator {
+    background-color: #e0e0e0;
+    /* Distinct gray background */
+    padding: 15px 20px;
+    /* Bigger bubble */
+    border-radius: 20px;
+    display: inline-block;
+    /* Ensure it takes space */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Add shadow for depth */
+    min-width: 60px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  }
+
+  .typing-indicator span {
+    width: 12px;
+    /* BIGGER dots (was 8px) */
+    height: 12px;
+    background-color: #000000;
+    /* PURE BLACK dots (was #888) */
+    display: inline-block;
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: bounce 1.2s infinite ease-in-out both;
+  }
+
+  .typing-indicator span:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+
+  .typing-indicator span:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+
+  @keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+      transform: scale(0);
+    }
+
+    40% {
+      transform: scale(1);
+    }
   }
 }
