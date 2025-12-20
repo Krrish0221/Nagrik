@@ -289,7 +289,8 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             <div
                                 key={idx}
                                 ref={idx === messages.length - 1 ? lastMessageRef : null}
-                                className={`message-bubble self-${msg.role === 'user' ? 'end' : 'start'} rounded-2xl ${msg.role === 'user' ? 'user-message rounded-tr-none bg-amber-500 text-white' : 'ai-message rounded-tl-none bg-white text-slate-800'} px-4 py-3 shadow-sm`}
+                                className={`message-bubble self-${msg.role === 'user' ? 'end' : 'start'} rounded-2xl ${msg.role === 'user' ? 'user-message rounded-tr-none bg-amber-500 text-white' : 'ai-message rounded-tl-none bg-white text-slate-800'} px-4 py-3 shadow-sm ${language === 'ur' ? 'text-right' : ''}`}
+                                dir={language === 'ur' ? 'rtl' : 'ltr'}
                             >
                                 <p className="whitespace-pre-wrap">{msg.content}</p>
                             </div>
@@ -317,7 +318,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                     </div>
 
                     {/* Input Area */}
-                    <div className="border-t border-slate-100 bg-white p-4">
+                    <div className="border-t border-slate-100 bg-white p-4" dir={language === 'ur' ? 'rtl' : 'ltr'}>
                         <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2">
                             {/* File Upload Button */}
                             <label className="cursor-pointer p-2 rounded-full hover:bg-slate-200 text-slate-400 transition-colors">
@@ -348,13 +349,13 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                     if (e.key === 'Enter') handleSend()
                                 }}
                                 placeholder={t("demo.placeholder")}
-                                className="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400"
+                                className={`flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400 ${language === 'ur' ? 'text-right' : ''}`}
                                 suppressHydrationWarning={true}
                                 disabled={fileProcessing}
                             />
                             <button
                                 onClick={() => handleSend()}
-                                className="rounded-full bg-amber-500 p-2 text-white transition-colors hover:bg-amber-600 disabled:bg-amber-300"
+                                className={`rounded-full bg-amber-500 p-2 text-white transition-colors hover:bg-amber-600 disabled:bg-amber-300 ${language === 'ur' ? 'rotate-180' : ''}`}
                                 disabled={fileProcessing}
                             >
                                 <Send className="h-4 w-4" />
