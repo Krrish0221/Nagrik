@@ -15,6 +15,7 @@ export function Navbar() {
         { code: "en", label: "English" },
         { code: "hi", label: "Hindi" },
         { code: "gu", label: "Gujarati" },
+        { code: "sa", label: "Sanskrit" },
         { code: "bho", label: "Bhojpuri" },
         { code: "ta", label: "Tamil" },
         { code: "bn", label: "Bengali" },
