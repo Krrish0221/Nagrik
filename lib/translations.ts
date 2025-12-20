@@ -59,7 +59,7 @@ export const translations = {
         footer: {
             tagline: "Empowering rural India with Voice AI.",
             madeWith: "Made with ❤️ by Team TRIO CORE",
-            poweredBy: "Powered by Bhashini & DigiLocker",
+            poweredBy: "Powered by DigiLocker",
         },
     },
     hi: {
@@ -122,7 +122,7 @@ export const translations = {
         footer: {
             tagline: "वॉयस एआई के साथ ग्रामीण भारत को सशक्त बनाना।",
             madeWith: "टीम TRIO CORE द्वारा ❤️ के साथ बनाया गया",
-            poweredBy: "भाषिनी और डिजीलॉकर द्वारा संचालित",
+            poweredBy: "डिजीलॉकर द्वारा संचालित",
         },
     },
     gu: {
@@ -185,7 +185,7 @@ export const translations = {
         footer: {
             tagline: "વોઇસ AI સાથે ગ્રામીણ ભારતને સશક્ત બનાવવું.",
             madeWith: "ટીમ TRIO CORE દ્વારા ❤️ સાથે બનાવેલ",
-            poweredBy: "ભાષિની અને ડિજીલોકર દ્વારા સંચાલિત",
+            poweredBy: "ડિજીલોકર દ્વારા સંચાલિત",
         },
     },
     bho: {
@@ -248,7 +248,7 @@ export const translations = {
         footer: {
             tagline: "वॉयस एआई के साथे ग्रामीण भारत के मजबूत बनावत बानी।",
             madeWith: "टीम TRIO CORE द्वारा ❤️ के साथे बनल",
-            poweredBy: "भाषिनी आ डिजीलॉकर द्वारा संचालित",
+            poweredBy: "डिजीलॉकर द्वारा संचालित",
         },
     },
     ta: {
@@ -311,7 +311,7 @@ export const translations = {
         footer: {
             tagline: "குரல் AI மூலம் கிராமப்புற இந்தியாவை மேம்படுத்துதல்.",
             madeWith: "குழு TRIO CORE மூலம் ❤️ உடன் உருவாக்கப்பட்டது",
-            poweredBy: "Bhashini & DigiLocker மூலம் இயக்கப்படுகிறது",
+            poweredBy: "DigiLocker மூலம் இயக்கப்படுகிறது",
         },
     },
     bn: {
@@ -374,7 +374,7 @@ export const translations = {
         footer: {
             tagline: "ভয়েস এআই দিয়ে গ্রামীণ ভারতকে ক্ষমতায়ন করা।",
             madeWith: "টিম TRIO CORE দ্বারা ❤️ দিয়ে তৈরি",
-            poweredBy: "ভাষিণী এবং ডিজিলকার দ্বারা চালিত",
+            poweredBy: "ডিজিলকার দ্বারা চালিত",
         },
     },
     mr: {
@@ -437,7 +437,7 @@ export const translations = {
         footer: {
             tagline: "व्हॉइस एआय सह ग्रामीण भारताला सक्षम करणे।",
             madeWith: "टीम TRIO CORE द्वारे ❤️ सह तयार केलेले",
-            poweredBy: "भाषिणी आणि डिजीलॉकर द्वारे समर्थित",
+            poweredBy: "डिजीलॉकर द्वारे समर्थित",
         },
     },
     te: {
@@ -500,7 +500,7 @@ export const translations = {
         footer: {
             tagline: "వాయిస్ AIతో గ్రామీణ భారతదేశాన్ని శక్తివంతం చేయడం.",
             madeWith: "టీమ్ TRIO CORE ద్వారా ❤️ తో తయారు చేయబడింది",
-            poweredBy: "భాషిణి & డిజిలాకర్ ద్వారా ఆధారితం",
+            poweredBy: "డిజిలాకర్ ద్వారా ఆధారితం",
         },
     },
     ur: {
@@ -563,7 +563,7 @@ export const translations = {
         footer: {
             tagline: "وائس AI کے ساتھ دیہی ہندوستان کو بااختیار بنانا۔",
             madeWith: "ٹیم TRIO CORE کی طرف سے ❤️ کے ساتھ بنایا گیا",
-            poweredBy: "بھاشینی اور ڈیجی لاکر کے ذریعے تقویت یافتہ",
+            poweredBy: "ڈیجی لاکر کے ذریعے تقویت یافتہ",
         },
     },
     kn: {
@@ -626,7 +626,7 @@ export const translations = {
         footer: {
             tagline: "ಧ್ವನಿ AI ನೊಂದಿಗೆ ಗ್ರಾಮೀಣ ಭಾರತವನ್ನು ಸಬಲೀಕರಣಗೊಳಿಸುವುದು.",
             madeWith: "ತಂಡ TRIO CORE ನಿಂದ ❤️ ನೊಂದಿಗೆ ಮಾಡಲಾಗಿದೆ",
-            poweredBy: "ಭಾಷಿಣಿ ಮತ್ತು ಡಿಜಿಲಾಕರ್‌ನಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ",
+            poweredBy: "ಡಿಜಿಲಾಕರ್‌ನಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ",
         },
     },
     or: {
@@ -689,7 +689,7 @@ export const translations = {
         footer: {
             tagline: "ଭଏସ୍ AI ସହିତ ଗ୍ରାମୀଣ ଭାରତକୁ ସଶକ୍ତ କରିବା |",
             madeWith: "ଟିମ୍ TRIO CORE ଦ୍ୱାରା ❤️ ସହିତ ନିର୍ମିତ",
-            poweredBy: "ଭାଷିନୀ ଏବଂ ଡିଜିଲକର୍ ଦ୍ୱାରା ପରିଚାଳିତ",
+            poweredBy: "ଡିଜିଲକର୍ ଦ୍ୱାରା ପରିଚାଳିତ",
         },
     },
     ml: {
@@ -752,7 +752,7 @@ export const translations = {
         footer: {
             tagline: "വോയ്സ് AI ഉപയോഗിച്ച് ഗ്രാമീണ ഇന്ത്യയെ ശാക്തീകരിക്കുന്നു.",
             madeWith: "ടീം TRIO CORE ❤️ ഉപയോഗിച്ച് നിർമ്മിച്ചത്",
-            poweredBy: "ഭാഷിണിയും ഡിജിലോക്കറും നൽകുന്നത്",
+            poweredBy: "ഡിജിലോക്കർ നൽകുന്നത്",
         },
     },
     pa: {
@@ -816,7 +816,7 @@ export const translations = {
         footer: {
             tagline: "ਵੌਇਸ AI ਨਾਲ ਪੇਂਡੂ ਭਾਰਤ ਨੂੰ ਸ਼ਕਤੀਕਰਨ।",
             madeWith: "ਟੀਮ TRIO CORE ਦੁਆਰਾ ❤️ ਨਾਲ ਬਣਾਇਆ ਗਿਆ",
-            poweredBy: "ਭਾਸ਼ਿਨੀ ਅਤੇ ਡਿਜੀਲੌਕਰ ਦੁਆਰਾ ਸੰਚਾਲਿਤ",
+            poweredBy: "ਡਿਜੀਲੌਕਰ ਦੁਆਰਾ ਸੰਚਾਲਿਤ",
         },
     },
     as: {
@@ -879,7 +879,7 @@ export const translations = {
         footer: {
             tagline: "ভয়েচ এআইৰ সৈতে গ্ৰামীণ ভাৰতক সৱলীকৰণ।",
             madeWith: "টিম TRIO CORE ৰ দ্বাৰা ❤️ ৰে নিৰ্মিত",
-            poweredBy: "ভাষিণী আৰু ডিজিলেকাৰৰ দ্বাৰা চালিত",
+            poweredBy: "ডিজিলেকাৰৰ দ্বাৰা চালিত",
         },
     },
     mai: {
@@ -942,7 +942,7 @@ export const translations = {
         footer: {
             tagline: "वॉयस एआई क संग ग्रामीण भारत कें सशक्त बनबैत।",
             madeWith: "टीम TRIO CORE द्वारा ❤️ क संग बनल",
-            poweredBy: "भाषिणी आ डिजीलॉकर द्वारा संचालित",
+            poweredBy: "डिजीलॉकर द्वारा संचालित",
         },
     },
     sa: {
@@ -1005,7 +1005,7 @@ export const translations = {
         footer: {
             tagline: "ध्वनि-AI द्वारा ग्रामीण-भारतस्य सशक्तीकरणम्।",
             madeWith: "Team TRIO CORE द्वारा ❤️ सस्नेहं निर्मितम्",
-            poweredBy: "भाषिनी तथा DigiLocker द्वारा संचालितम्",
+            poweredBy: "DigiLocker द्वारा संचालितम्",
         },
     },
 };

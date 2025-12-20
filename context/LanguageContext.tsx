@@ -20,6 +20,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         for (const k of keys) {
             value = value?.[k];
         }
+        // Fallback to English if value is missing
+        if (!value) {
+            value = translations["en"];
+            for (const k of keys) {
+                value = value?.[k];
+            }
+        }
         return value || key;
     };
 

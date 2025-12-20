@@ -22,9 +22,16 @@ export function Footer() {
                             (Krish, Avinash, Akshar)
                         </span>
                     </p>
-                    <p className="text-xs text-slate-400">
-                        {t("footer.poweredBy")}
-                    </p>
+                    <div className="flex items-center gap-2 justify-center md:justify-end">
+                        <p className="text-xs text-slate-400">
+                            {t("footer.poweredBy")}
+                        </p>
+                        <img
+                            src="https://www.digilocker.gov.in/assets/img/digilocker_logo.png"
+                            alt="DigiLocker"
+                            className="h-6 w-auto"
+                        />
+                    </div>
                 </div>
             </div>
         </footer>
