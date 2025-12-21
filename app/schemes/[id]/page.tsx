@@ -5,7 +5,7 @@ import { Navbar } from "@/components/ui/navbar"
 import { Footer } from "@/components/ui/footer"
 import { schemesData, type SchemeContent } from "@/lib/schemesData"
 import Link from "next/link"
-import { ArrowLeft, FileText, CheckCircle2, HelpCircle, Bot } from "lucide-react"
+import { arrow-up-left-circle, page-flip, check-square-solid, info-circle, xray-view } from "iconoir-react"
 import { motion } from "framer-motion"
 import { useLanguage } from "@/context/LanguageContext"
 import { translations } from "@/lib/translations"
@@ -47,7 +47,7 @@ export default function SchemeDetailsPage() {
                         href="/"
                         className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors"
                     >
-                        <ArrowLeft className="h-4 w-4 mr-2" />
+                        <arrow-up-left-circle className="h-4 w-4 mr-2" />
                         {t.back_to_home}
                     </Link>
 
@@ -87,7 +87,7 @@ export default function SchemeDetailsPage() {
                                 <div className="grid sm:grid-cols-2 gap-4">
                                     {content.modal_content.highlights.map((item, i) => (
                                         <div key={i} className="flex items-center text-slate-600 bg-slate-50 p-3 rounded-lg">
-                                            <CheckCircle2 className="h-5 w-5 text-green-500 mr-3 shrink-0" />
+                                            <check-square-solid className="h-5 w-5 text-green-500 mr-3 shrink-0" />
                                             {item}
                                         </div>
                                     ))}
@@ -103,7 +103,7 @@ export default function SchemeDetailsPage() {
                             className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100"
                         >
                             <h2 className="text-2xl font-bold text-slate-900 mb-6 flex items-center">
-                                <HelpCircle className="h-6 w-6 text-amber-600 mr-3" />
+                                <info-circle className="h-6 w-6 text-amber-600 mr-3" />
                                 {t.application_process}
                             </h2>
                             <div className="space-y-4">
@@ -162,7 +162,7 @@ export default function SchemeDetailsPage() {
                             <ul className="space-y-3">
                                 {content.full_page_content.eligibility_detailed.map((item, i) => (
                                     <li key={i} className="flex items-start">
-                                        <CheckCircle2 className="h-5 w-5 text-slate-400 mr-3 shrink-0" />
+                                        <check-square-solid className="h-5 w-5 text-slate-400 mr-3 shrink-0" />
                                         <span className="text-slate-600">{item}</span>
                                     </li>
                                 ))}
@@ -177,10 +177,10 @@ export default function SchemeDetailsPage() {
                             className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-4 opacity-20">
-                                <Bot className="h-24 w-24" />
+                                <xray-view className="h-24 w-24" />
                             </div>
                             <h3 className="text-xl font-bold mb-4 flex items-center relative z-10">
-                                <Bot className="h-6 w-6 mr-2" />
+                                <xray-view className="h-6 w-6 mr-2" />
                                 {t.how_nagrik_helps}
                             </h3>
                             <p className="text-amber-50 relative z-10 text-lg leading-relaxed mb-6">
