@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Send, Mic } from "lucide-react"
+import { Send, Microphone } from "iconoir-react"
 import { useLanguage } from "@/context/LanguageContext"
 import { useState, useEffect, useRef } from "react"
 
@@ -312,7 +312,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             className="self-center mt-auto mb-2"
                         >
                             <div className="flex items-center gap-2 px-3 py-1 bg-slate-200 rounded-full text-xs text-slate-600">
-                                <Mic className="w-3 h-3 animate-pulse" /> {t("hero.listening")}
+                                <Microphone className="w-3 h-3 animate-pulse" /> {t("hero.listening")}
                             </div>
                         </motion.div>
                     </div>
@@ -339,7 +339,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                 className={`rounded-full p-2 transition-colors ${isListening ? 'bg-red-100 text-red-600' : 'hover:bg-slate-200 text-slate-400'}`}
                                 title="Tap to speak"
                             >
-                                <Mic className={`h-5 w-5 ${isListening ? 'animate-pulse' : ''}`} />
+                                <Microphone className={`h-5 w-5 ${isListening ? 'animate-pulse' : ''}`} />
                             </button>
                             <input
                                 type="text"

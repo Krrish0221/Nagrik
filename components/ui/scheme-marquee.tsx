@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight } from "iconoir-react"
 import { cn } from "@/lib/utils"
 import { schemesData, type Scheme, type SchemeContent } from "@/lib/schemesData"
 import { SchemeModal } from "./scheme-modal"

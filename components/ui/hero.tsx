@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Mic, MicOff } from "lucide-react"
+import { Microphone, MicrophoneMute } from "iconoir-react"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 
@@ -161,7 +161,7 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                                     ))}
                                 </div>
                             ) : (
-                                <Mic className="h-10 w-10" />
+                                <Microphone className="h-10 w-10" />
                             )}
                         </button>
                     </div>
