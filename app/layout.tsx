@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Inconsolate } from "next/font/google";
+import { Inter, Inconsolata } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 
-const Inter = Inter({
-  variable: "--font-Inter",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const Inconsolate = Inconsolate({
-  variable: "--font-inconsolate",
+const inconsolata = Inconsolata({
+  variable: "--font-incon",
   subsets: ["latin"],
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${inconsolate.variable} antialiased`}
+        className={`${inter.variable} ${inconsolata.variable} antialiased`}
         suppressHydrationWarning
       >
         <LanguageProvider>{children}</LanguageProvider>
