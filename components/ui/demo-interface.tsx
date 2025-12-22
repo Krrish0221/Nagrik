@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { SendSolid, MicrophoneSolid, Refresh, CheckCircleSolid } from "iconoir-react"
+import { SendSolid, MicrophoneSolid, Refresh, CheckCircleSolid, SoundHigh, SoundOff } from "iconoir-react"
 import { useLanguage } from "@/context/LanguageContext"
 import { useState, useEffect, useRef } from "react"
 
@@ -14,6 +14,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
     const { t, language } = useLanguage()
     const [inputValue, setInputValue] = useState("")
     const [isListening, setIsListening] = useState(false)
+    const [isSpeechEnabled, setIsSpeechEnabled] = useState(true) // Speech toggle state
     const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [fileProcessing, setFileProcessing] = useState(false) // New state for file upload
@@ -206,6 +207,8 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
         sa: 'sa-IN'
     }
 
+    const inputRef = useRef<HTMLInputElement>(null)
+
     const startListening = () => {
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
@@ -221,19 +224,36 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
 
             recognition.onresult = (event: any) => {
                 const transcript = event.results[0][0].transcript
-                setInputValue(transcript)
-                setIsListening(false)
+
+                if (transcript && transcript.trim().length > 0) {
+                    // Auto-Redirect: Send directly
+                    handleSend(transcript)
+                    setInputValue("") // Clear input just in case
+
+                    // State Clear & Focus
+                    setIsListening(false)
+                    setTimeout(() => {
+                        inputRef.current?.focus()
+                    }, 100)
+                } else {
+                    // Error Handling: Empty transcript
+                    alert("I didn't catch that. Please try again.")
+                    setIsListening(false)
+                }
             }
 
             recognition.onerror = (event: any) => {
                 if (event.error === 'aborted' || event.error === 'no-speech') {
+                    setIsListening(false)
                     return
                 }
                 console.error("Speech recognition error", event.error)
+                alert("Available speech recognition error. Please try again.")
                 setIsListening(false)
             }
 
             recognition.onend = () => {
+                // Ensure state is cleared if it stops naturally without result
                 setIsListening(false)
             }
 
@@ -257,14 +277,37 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
 
                 <div className="mx-auto max-w-md overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
                     {/* Header */}
-                    <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-slate-100 bg-slate-50 p-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-600">
-                            <span className="font-bold">N</span>
+                    <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-slate-50 p-4">
+                        <div className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+                                <span className="font-bold">N</span>
+                            </div>
+                            <div>
+                                <h3 className="font-semibold text-slate-900">{t("demo.assistantName")}</h3>
+                                <p className="text-xs text-green-600">{t("demo.status")}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 className="font-semibold text-slate-900">{t("demo.assistantName")}</h3>
-                            <p className="text-xs text-green-600">{t("demo.status")}</p>
-                        </div>
+
+                        <motion.button
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setIsSpeechEnabled(!isSpeechEnabled)}
+                            className={`flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium transition-colors ${isSpeechEnabled
+                                ? "bg-green-100 text-green-700"
+                                : "bg-amber-500 text-white hover:bg-amber-600 shadow-md shadow-amber-500/20"
+                                }`}
+                        >
+                            {isSpeechEnabled ? (
+                                <>
+                                    <SoundHigh className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                    <span>Speech On</span>
+                                </>
+                            ) : (
+                                <>
+                                    <SoundOff className="h-3.5 w-3.5" strokeWidth={2.5} />
+                                    <span>Enable Speech</span>
+                                </>
+                            )}
+                        </motion.button>
                     </div>
 
                     {/* Chat Area */}
@@ -415,6 +458,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                 <MicrophoneSolid className={`h-5 w-5 ${isListening ? 'animate-pulse' : ''}`} />
                             </button>
                             <input
+                                ref={inputRef}
                                 type="text"
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
