@@ -9,7 +9,7 @@ const Inter = Inter({
 });
 
 const Inconsolate = Inconsolate({
-  variable: "--font-geist-mono",
+  variable: "--font-inconsolate",
   subsets: ["latin"],
 });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${inconsolate.variable} antialiased`}
         suppressHydrationWarning
       >
         <LanguageProvider>{children}</LanguageProvider>
