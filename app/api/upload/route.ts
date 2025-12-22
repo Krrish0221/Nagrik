@@ -20,9 +20,11 @@ export async function POST(req: Request) {
             try {
                 const data = await pdf(buffer);
                 extractedText = data.text;
-            } catch (pdfError) {
+            } catch (pdfError: any) {
                 console.error("PDF Parse Error:", pdfError);
-                return NextResponse.json({ error: "Failed to parse PDF" }, { status: 500 });
+                // Graceful degradation: If PDF parsing fails (e.g., encryption, images), 
+                // don't fail the upload. Just warn the AI/User.
+                extractedText = `[System Note: Unable to extract text content from this PDF automatically. Error: ${pdfError.message || 'Unknown parsing error'}. The user has uploaded this file, but you cannot read it directly.]`;
             }
         } else if (file.type.startsWith("image/")) {
             try {

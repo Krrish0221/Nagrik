@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Microphone, MicrophoneMute } from "iconoir-react"
+import { MicrophoneSolid, MicrophoneMuteSolid } from "iconoir-react"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 
@@ -107,7 +107,7 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                                     initial={{ opacity: 0, y: 10, scale: 0.9 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-8 w-64 p-4 bg-white/90 text-slate-900 rounded-2xl backdrop-blur-sm shadow-xl z-20 text-center"
+                                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-8 w-64 p-4 bg-white/90 text-slate-900 rounded-2xl backdrop-blur-xl border border-white/50 shadow-2xl z-20 text-center"
                                 >
                                     <p className="text-sm font-medium">{transcript || "Listening..."}</p>
                                     <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white/90 rotate-45" />
@@ -115,34 +115,40 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                             )}
                         </AnimatePresence>
 
-                        {/* Pulse Rings */}
+                        {/* Enhanced Pulse Rings */}
                         <AnimatePresence>
                             {isListening && (
                                 <>
                                     <motion.div
-                                        initial={{ opacity: 0.5, scale: 1 }}
-                                        animate={{ opacity: 0, scale: 2 }}
-                                        transition={{ duration: 1.5, repeat: Infinity }}
-                                        className="absolute inset-0 rounded-full bg-amber-500/30"
+                                        initial={{ opacity: 0, scale: 1 }}
+                                        animate={{ opacity: [0.2, 0.5, 0], scale: 2.5 }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                                        className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500/40 to-orange-500/40 blur-md"
                                     />
                                     <motion.div
-                                        initial={{ opacity: 0.5, scale: 1 }}
-                                        animate={{ opacity: 0, scale: 1.5 }}
-                                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-                                        className="absolute inset-0 rounded-full bg-amber-500/20"
+                                        initial={{ opacity: 0, scale: 1 }}
+                                        animate={{ opacity: [0.2, 0.5, 0], scale: 2 }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 0.5 }}
+                                        className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500/30 to-orange-500/30 blur-sm"
+                                    />
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 1 }}
+                                        animate={{ opacity: [0.2, 0.5, 0], scale: 1.5 }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 1 }}
+                                        className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-500/20 to-orange-500/20"
                                     />
                                 </>
                             )}
                         </AnimatePresence>
 
-                        {/* Main Button */}
+                        {/* Main Button with Premium Look */}
                         <button
                             onClick={toggleListening}
                             className={cn(
-                                "relative flex h-24 w-24 items-center justify-center rounded-full shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-amber-200",
+                                "relative flex h-24 w-24 items-center justify-center rounded-full transition-all duration-500 focus:outline-none z-10",
                                 isListening
-                                    ? "bg-amber-500 text-white"
-                                    : "bg-white text-amber-600 hover:bg-amber-50"
+                                    ? "bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-[0_0_40px_-10px_rgba(245,158,11,0.6)] scale-110"
+                                    : "bg-white/80 backdrop-blur-xl border border-white/60 text-amber-600 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:scale-105 hover:bg-white hover:shadow-[0_20px_40px_-10px_rgba(245,158,11,0.2)]"
                             )}
                         >
                             {isListening ? (
@@ -150,23 +156,28 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                                     {[1, 2, 3, 4, 5].map((i) => (
                                         <motion.div
                                             key={i}
-                                            animate={{ height: [10, 24, 10] }}
+                                            animate={{ height: [8, 32, 8] }}
                                             transition={{
                                                 duration: 0.5,
                                                 repeat: Infinity,
                                                 delay: i * 0.1,
+                                                ease: "easeInOut"
                                             }}
-                                            className="w-1 rounded-full bg-white"
+                                            className="w-1.5 rounded-full bg-white shadow-sm"
                                         />
                                     ))}
                                 </div>
                             ) : (
-                                <Microphone className="h-10 w-10" />
+                                <MicrophoneSolid className="h-10 w-10 drop-shadow-sm" />
                             )}
                         </button>
                     </div>
-                    <p className="mt-4 text-sm font-medium text-slate-500">
-                        {isListening ? t("hero.listening") : t("hero.tapToSpeak")}
+                    <p className="mt-6 text-sm font-semibold tracking-wide text-slate-500 uppercase">
+                        {isListening ? (
+                            <span className="text-amber-600 animate-pulse">{t("hero.listening")}</span>
+                        ) : (
+                            t("hero.tapToSpeak")
+                        )}
                     </p>
                 </motion.div>
             </div>

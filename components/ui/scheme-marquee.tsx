@@ -74,7 +74,7 @@ function SchemeCard({ scheme, content, onClick, buttonText }: { scheme: Scheme; 
             </div>
             <button className="group/btn mt-4 flex items-center gap-2 text-sm font-semibold text-amber-600 transition-colors hover:text-amber-700">
                 {buttonText}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" strokeWidth={2.5} />
             </button>
         </div>
     )

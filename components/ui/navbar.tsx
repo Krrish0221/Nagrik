@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { ShieldCheck, NavArrowDown, Menu, Xmark, Check } from "iconoir-react"
+import { NavArrowDownSolid, Menu, Xmark, Check } from "iconoir-react"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 import { Language } from "@/lib/translations"
@@ -49,7 +49,7 @@ export function Navbar() {
                     <div className="relative group">
                         <button className="flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 py-2">
                             {t("navbar.language")}
-                            <NavArrowDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                            <NavArrowDownSolid className="h-4 w-4 transition-transform group-hover:rotate-180" />
                         </button>
                         {/* Dropdown */}
                         <div className="absolute right-0 top-full hidden w-40 pt-2 group-hover:block">
@@ -72,7 +72,11 @@ export function Navbar() {
                     </div>
 
                     <button className="flex items-center gap-2 rounded-full bg-gradient-to-r from-slate-900 to-slate-800 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 transition-all hover:scale-105 hover:shadow-slate-900/30 active:scale-95">
-                        <ShieldCheck className="h-4 w-4" />
+                        <img
+                            src="/digilocker_new.png"
+                            alt="DigiLocker"
+                            className="h-7 w-auto object-contain rounded-sm"
+                        />
                         {t("navbar.login")}
                     </button>
                 </div>
@@ -82,7 +86,7 @@ export function Navbar() {
                     className="md:hidden"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
-                    {isMenuOpen ? <Xmark /> : <Menu />}
+                    {isMenuOpen ? <Xmark strokeWidth={2.5} /> : <Menu strokeWidth={2.5} />}
                 </button>
             </div>
 
@@ -109,7 +113,11 @@ export function Navbar() {
                             ))}
                         </div>
                         <button className="flex w-full items-center justify-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white">
-                            <ShieldCheck className="h-4 w-4" />
+                            <img
+                                src="/digilocker_new.png"
+                                alt="DigiLocker"
+                                className="h-7 w-auto object-contain rounded-sm"
+                            />
                             {t("navbar.login")}
                         </button>
                     </div>

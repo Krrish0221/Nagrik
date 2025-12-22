@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Send, Microphone } from "iconoir-react"
+import { SendSolid, MicrophoneSolid, Refresh, CheckCircleSolid } from "iconoir-react"
 import { useLanguage } from "@/context/LanguageContext"
 import { useState, useEffect, useRef } from "react"
 
@@ -17,6 +17,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
     const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [fileProcessing, setFileProcessing] = useState(false) // New state for file upload
+    const [processingStage, setProcessingStage] = useState(0) // 0: Uploading, 1: Analyzing, 2: Extracting, 3: Complete
     const chatContainerRef = useRef<HTMLDivElement>(null)
     const lastMessageRef = useRef<HTMLDivElement>(null)
 
@@ -69,6 +70,24 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
         if (!file) return;
 
         setFileProcessing(true);
+        setProcessingStage(0);
+
+        // Simulate stages
+        const stageTimer = setInterval(() => {
+            setProcessingStage(prev => {
+                // If already complete (3), stop and don't revert
+                if (prev === 3) {
+                    clearInterval(stageTimer);
+                    return 3;
+                }
+                if (prev >= 2) {
+                    clearInterval(stageTimer);
+                    return 2;
+                }
+                return prev + 1;
+            });
+        }, 800);
+
         const formData = new FormData();
         formData.append("file", file);
 
@@ -82,27 +101,26 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
             const data = await response.json();
 
             if (data.text) {
-                // Add extracted text to context silently? Or just send it as a message?
-                // For this hackathon, let's auto-send it as a user message so the AI knows about it.
-                // Or better, set it as input value or just inject it.
-                // Let's inject it into the message history visibly.
-                const fileContextMsg = `[Analyzed File: ${file.name}]\n${data.text.substring(0, 1000)}...`; // Truncate for display, but could be full in backend context
+                setProcessingStage(3); // Complete
 
-                // Better approach: Send it as a special system/context message or just a user message
-                // "I am uploading this file: [content]"
-                const hiddenContent = `I have uploaded a file named ${file.name}. Here is its content:\n\n${data.text}\n\nAnalyze this document.`;
-                handleSend(hiddenContent); // Send automatically
+                // Delay showing data to let user see "Complete" state
+                setTimeout(() => {
+                    const hiddenContent = `I have uploaded a file named ${file.name}. Here is its content:\n\n${data.text}\n\nAnalyze this document.`;
+                    handleSend(hiddenContent); // Send automatically
+                    setFileProcessing(false);
+                }, 1000);
 
             } else {
                 console.error("File processing failed:", data.error);
                 alert("Failed to process file. Please try again.");
+                setFileProcessing(false);
             }
         } catch (error) {
             console.error("Upload error:", error);
             alert("Error uploading file.");
-        } finally {
             setFileProcessing(false);
-            // Reset input
+        } finally {
+            // Reset handled in success path or error catch
             e.target.value = "";
         }
     };
@@ -296,10 +314,65 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             </div>
                         ))}
 
-                        {(isLoading || fileProcessing) && (
+                        {/* Enhanced Processing Bubble */}
+                        {fileProcessing && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{
+                                    opacity: 1,
+                                    scale: 1,
+                                    boxShadow: ["0 4px 6px -1px rgb(0 0 0 / 0.1)", "0 10px 15px -3px rgb(245 158 11 / 0.3)", "0 4px 6px -1px rgb(0 0 0 / 0.1)"]
+                                }}
+                                transition={{
+                                    opacity: { duration: 0.3 },
+                                    scale: { duration: 0.3 },
+                                    boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                                }}
+                                className="self-start rounded-2xl rounded-tl-none bg-white p-4 shadow-md border border-amber-100 max-w-xs w-full"
+                            >
+                                <div className="flex items-center gap-3 mb-3">
+                                    <div className="relative flex items-center justify-center w-8 h-8">
+                                        {processingStage === 3 ? (
+                                            <motion.div
+                                                initial={{ scale: 0 }}
+                                                animate={{ scale: 1 }}
+                                                transition={{ type: "spring", stiffness: 200 }}
+                                            >
+                                                <CheckCircleSolid className="w-8 h-8 text-green-500" />
+                                            </motion.div>
+                                        ) : (
+                                            <motion.div
+                                                animate={{ rotate: 360 }}
+                                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                            >
+                                                <Refresh className="w-6 h-6 text-amber-500" strokeWidth={2.5} />
+                                            </motion.div>
+                                        )}
+                                    </div>
+                                    <div className="flex-1">
+                                        <p className="text-sm font-semibold text-slate-700">
+                                            {processingStage === 0 && "Uploading..."}
+                                            {processingStage === 1 && "Analyzing Text..."}
+                                            {processingStage === 2 && "Extracting Details..."}
+                                            {processingStage === 3 && "Extraction Complete!"}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                    <motion.div
+                                        className={`h-full ${processingStage === 3 ? 'bg-green-500' : 'bg-amber-500'}`}
+                                        initial={{ width: "0%" }}
+                                        animate={{ width: `${((processingStage + 1) / 4) * 100}%` }}
+                                        transition={{ duration: 0.5 }}
+                                    />
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {/* Standard Typing Indicator (only for chat response) */}
+                        {isLoading && !fileProcessing && (
                             <div className="typing-indicator" id="ai-loader">
                                 <span></span><span></span><span></span>
-                                {fileProcessing && <div className="text-xs text-slate-400 mt-1">Processing File...</div>}
                             </div>
                         )}
 
@@ -312,7 +385,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             className="self-center mt-auto mb-2"
                         >
                             <div className="flex items-center gap-2 px-3 py-1 bg-slate-200 rounded-full text-xs text-slate-600">
-                                <Microphone className="w-3 h-3 animate-pulse" /> {t("hero.listening")}
+                                <MicrophoneSolid className="w-3 h-3 animate-pulse" /> {t("hero.listening")}
                             </div>
                         </motion.div>
                     </div>
@@ -339,7 +412,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                 className={`rounded-full p-2 transition-colors ${isListening ? 'bg-red-100 text-red-600' : 'hover:bg-slate-200 text-slate-400'}`}
                                 title="Tap to speak"
                             >
-                                <Microphone className={`h-5 w-5 ${isListening ? 'animate-pulse' : ''}`} />
+                                <MicrophoneSolid className={`h-5 w-5 ${isListening ? 'animate-pulse' : ''}`} />
                             </button>
                             <input
                                 type="text"
@@ -358,7 +431,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                 className={`rounded-full bg-amber-500 p-2 text-white transition-colors hover:bg-amber-600 disabled:bg-amber-300 ${language === 'ur' ? 'rotate-180' : ''}`}
                                 disabled={fileProcessing}
                             >
-                                <Send className="h-4 w-4" />
+                                <SendSolid className="h-4 w-4" />
                             </button>
                         </div>
                     </div>

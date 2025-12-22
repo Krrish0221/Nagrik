@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Microphone, ShieldCheck, Sparks, Translate } from "iconoir-react"
+import { MicrophoneSolid, ShieldCheck, SparksSolid, Translate } from "iconoir-react"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 
@@ -12,7 +12,7 @@ export function BentoGrid() {
         {
             title: t("bento.voiceNav.title"),
             description: t("bento.voiceNav.desc"),
-            icon: Microphone,
+            icon: MicrophoneSolid,
             className: "md:col-span-2 md:row-span-2",
             color: "bg-white/20 backdrop-blur-md border-white/30 shadow-lg",
             iconColor: "text-amber-600",
@@ -28,7 +28,7 @@ export function BentoGrid() {
         {
             title: t("bento.autoFill.title"),
             description: t("bento.autoFill.desc"),
-            icon: Sparks,
+            icon: SparksSolid,
             className: "md:col-span-1 md:row-span-1",
             color: "bg-white/20 backdrop-blur-md border-white/30 shadow-lg",
             iconColor: "text-slate-700",
@@ -76,7 +76,7 @@ export function BentoGrid() {
                                     feature.iconColor
                                 )}
                             >
-                                <feature.icon className="h-6 w-6" />
+                                <feature.icon className="h-6 w-6" strokeWidth={2.5} />
                             </div>
                             <div>
                                 <h3 className="mb-2 text-xl font-bold text-slate-900 transition-colors duration-300 group-hover:text-amber-700">

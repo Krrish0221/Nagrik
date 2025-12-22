@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { Xmark, ArrowRight, CheckCircle } from "iconoir-react"
+import { Xmark, ArrowRight, CheckCircleSolid } from "iconoir-react"
 import Link from "next/link"
 import type { Scheme, SchemeContent } from "@/lib/schemesData"
 import { useLanguage } from "@/context/LanguageContext"
@@ -48,7 +48,7 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
                                 onClick={onClose}
                                 className="absolute right-4 top-4 rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
                             >
-                                <Xmark className="h-5 w-5" />
+                                <Xmark className="h-5 w-5" strokeWidth={2.5} />
                             </button>
 
                             <div className="mt-2">
@@ -65,7 +65,7 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
                                     <ul className="space-y-2">
                                         {content.modal_content.highlights.map((highlight, index) => (
                                             <li key={index} className="flex items-start gap-2 text-slate-700">
-                                                <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
+                                                <CheckCircleSolid className="h-5 w-5 text-green-500 shrink-0" />
                                                 <span className="text-sm">{highlight}</span>
                                             </li>
                                         ))}
@@ -78,7 +78,7 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
                                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3.5 font-semibold text-white shadow-lg transition-transform hover:scale-[1.02] hover:shadow-xl active:scale-[0.98]"
                                 >
                                     {t.read_full_guide}
-                                    <ArrowRight className="h-5 w-5" />
+                                    <ArrowRight className="h-5 w-5" strokeWidth={2.5} />
                                 </Link>
                             </div>
                         </div>
