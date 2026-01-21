@@ -6,7 +6,7 @@ import { Xmark, Search, MapPin, Building, Coins, ArrowRight, HeartSolid, Phone, 
 import { schemesData, type Scheme, type SchemeContent } from "@/lib/schemesData"
 import { useLanguage } from "@/context/LanguageContext"
 import { SchemeModal } from "./scheme-modal"
-import { type Language } from "@/context/LanguageContext"
+import { type Language } from "@/lib/translations"
 
 // --- Internationalization (I18n) ---
 
