@@ -31,7 +31,7 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+                        className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
                     />
 
                     {/* Modal */}
@@ -40,7 +40,7 @@ export function SchemeModal({ isOpen, onClose, scheme }: SchemeModalProps) {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 10 }}
                         transition={{ duration: 0.25, ease: "easeOut" }}
-                        className="fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 p-4"
+                        className="fixed left-1/2 top-1/2 z-[100] w-full max-w-lg -translate-x-1/2 -translate-y-1/2 p-4"
                     >
                         <div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-2xl">
                             {/* Close Button */}
