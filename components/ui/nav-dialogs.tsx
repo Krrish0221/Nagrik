@@ -543,7 +543,7 @@ export function SkillsHubModal({ isOpen, onClose }: ModalProps) {
     const t = NAV_TRANSLATIONS[language] || NAV_TRANSLATIONS['en']
 
     return (
-        <ModalWrapper onClose={onClose} title={t.skills_hub_title} color="bg-blue-600">
+        <ModalWrapper onClose={onClose} title={t.skills_hub_title} color="bg-black">
             <div className="space-y-6">
                 {/* Recommended Section */}
                 <div className="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-4 border border-blue-100">
@@ -652,7 +652,7 @@ export function HelpingHandModal({ isOpen, onClose }: ModalProps) {
     })
 
     return (
-        <ModalWrapper onClose={onClose} title={t.helping_hand_title} color="bg-rose-500">
+        <ModalWrapper onClose={onClose} title={t.helping_hand_title} color="bg-black">
             <div className="space-y-4">
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
@@ -723,7 +723,7 @@ export function SchemesListModal({ isOpen, onClose }: ModalProps) {
 
     return (
         <>
-            <ModalWrapper onClose={onClose} title={t.schemes_title} color="bg-amber-500">
+            <ModalWrapper onClose={onClose} title={t.schemes_title} color="bg-black">
                 <div className="max-h-[70vh] overflow-y-auto pr-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {schemesData.map((scheme, idx) => {
                         const content = scheme[language] as SchemeContent || scheme["en"]
