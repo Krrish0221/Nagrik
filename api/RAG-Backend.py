@@ -109,7 +109,7 @@ def Consolidated_Embedder(Base_url):
 
 
 def query_answer_generation(query):
-    key='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'
+    key=''
     
     db = Chroma(persist_directory='./ChromaDB',
                 embedding_function=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
