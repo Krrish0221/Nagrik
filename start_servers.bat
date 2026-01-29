@@ -1,11 +1,11 @@
 @echo off
 :: Switch to the project drive and directory explicitly
-cd /d "d:\Krish\Hacakhthon\2025\nagrik"
+cd /d "%~dp0"
 
 echo Starting servers in %CD%...
 
 :: Start Python Backend
-start "Nagrik Backend (Python)" cmd /k "python api/py.py"
+start "Nagrik Backend (Python)" cmd /k "python api/Flask_APP.py"
 
 :: Start Next.js Frontend
 start "Nagrik Frontend (Next.js)" cmd /k "npm run dev"

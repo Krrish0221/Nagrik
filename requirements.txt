@@ -1,6 +1,15 @@
 Flask
 flask-cors
-openai
 python-dotenv
-groq
 requests
+streamlit
+pandas
+beautifulsoup4
+langchain
+langchain-core
+langchain-text-splitters
+langchain-chroma
+langchain-huggingface
+langchain-groq
+chromadb
+sentence-transformers
