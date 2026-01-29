@@ -147,7 +147,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
         try {
             // Changed to Python Backend URL
             // Changed to relative URL for Vercel/Local support via proxy/rewrites
-            const response = await fetch('/api/py', {
+            const response = await fetch('/api/Flask_APP/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
