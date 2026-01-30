@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 // @ts-ignore
 import pdf from 'pdf-parse';
-import Tesseract from 'tesseract.js';
+
 
 export async function POST(req: Request) {
     try {
@@ -26,17 +26,9 @@ export async function POST(req: Request) {
                 extractedText = `[System Note: Unable to extract text content from this PDF automatically. Error: ${pdfError.message || 'Unknown parsing error'}. The user has uploaded this file, but you cannot read it directly.]`;
             }
         } else if (file.type.startsWith("image/")) {
-            try {
-                const result = await Tesseract.recognize(
-                    buffer,
-                    'eng+hin', // English + Hindi support
-                    { logger: m => console.log(m) }
-                );
-                extractedText = result.data.text;
-            } catch (tesseractError) {
-                console.error("Tesseract Error:", tesseractError);
-                return NextResponse.json({ error: "Failed to process image" }, { status: 500 });
-            }
+            // Tesseract removed to fix Vercel build (Buffer overflow).
+            // TODO: integrated lighter OCR solution if needed.
+            extractedText = "[System Note: Image OCR is currently disabled for performance reasons.]";
         } else {
             return NextResponse.json({ error: "Unsupported file type. Please upload PDF or Image." }, { status: 400 });
         }
