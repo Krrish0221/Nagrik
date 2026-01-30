@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MicrophoneSolid, MicrophoneMuteSolid } from "iconoir-react"
+import { Microphone as MicrophoneSolid, MicrophoneMute as MicrophoneMuteSolid } from "iconoir-react/solid"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 

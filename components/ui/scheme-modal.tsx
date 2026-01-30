@@ -1,7 +1,8 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { Xmark, ArrowRight, CheckCircleSolid } from "iconoir-react"
+import { Xmark, ArrowRight } from "iconoir-react/regular"
+import { CheckCircle as CheckCircleSolid } from "iconoir-react/solid"
 import Link from "next/link"
 import type { Scheme, SchemeContent } from "@/lib/schemesData"
 import { useLanguage } from "@/context/LanguageContext"

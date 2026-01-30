@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { MicrophoneSolid, ShieldCheck, SparksSolid, Translate } from "iconoir-react"
+import { Microphone as MicrophoneSolid, Sparks as SparksSolid } from "iconoir-react/solid"
+import { ShieldCheck, Translate } from "iconoir-react/regular"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 

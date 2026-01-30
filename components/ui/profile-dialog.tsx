@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { Xmark, User, Calendar, Suitcase, Mail, Phone, MapPin, Coins, Community, Building } from "iconoir-react"
+import { Xmark, User, Calendar, Suitcase, Mail, Phone, MapPin, Coins, Community, Building } from "iconoir-react/regular"
 import { cn } from "@/lib/utils"
 
 export interface UserProfile {

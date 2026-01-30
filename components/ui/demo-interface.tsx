@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { SendSolid, MicrophoneSolid, Refresh, CheckCircleSolid, SoundHigh, SoundOff } from "iconoir-react"
+import { Send as SendSolid, Microphone as MicrophoneSolid, CheckCircle as CheckCircleSolid } from "iconoir-react/solid"
+import { Refresh, SoundHigh, SoundOff } from "iconoir-react/regular"
 import { useLanguage } from "@/context/LanguageContext"
 import { useState, useEffect, useRef } from "react"
 

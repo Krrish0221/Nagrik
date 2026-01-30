@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: any = {
   /* config options here */
   productionBrowserSourceMaps: false,
+  experimental: {
+    optimizePackageImports: ['iconoir-react'],
+  },
   async rewrites() {
     return [
       {

@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Xmark, Search, MapPin, Building, Coins, ArrowRight, HeartSolid, Phone, Clock } from "iconoir-react"
+import { Xmark, Search, MapPin, Building, Coins, ArrowRight, Phone, Clock } from "iconoir-react/regular"
+import { Heart as HeartSolid } from "iconoir-react/solid"
 import { schemesData, type Scheme, type SchemeContent } from "@/lib/schemesData"
 import { useLanguage } from "@/context/LanguageContext"
 import { SchemeModal } from "./scheme-modal"

@@ -2,7 +2,8 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { NavArrowDownSolid, Menu, Xmark, Check, User, LogOut, Settings, Suitcase, HeartSolid, BookStack } from "iconoir-react"
+import { NavArrowDown as NavArrowDownSolid, Heart as HeartSolid } from "iconoir-react/solid"
+import { Menu, Xmark, Check, User, LogOut, Settings, Suitcase, BookStack } from "iconoir-react/regular"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 import { Language } from "@/lib/translations"
