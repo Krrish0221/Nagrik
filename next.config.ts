@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: any = {
   /* config options here */
+  productionBrowserSourceMaps: false,
   async rewrites() {
     return [
       {
