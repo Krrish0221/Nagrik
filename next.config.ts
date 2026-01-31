@@ -21,6 +21,7 @@ const nextConfig: any = {
       'node_modules/sharp/**/*',
       '**/*.map',
       'node_modules/pdf-parse/test/**/*',
+      'ChromaDB/**/*',
     ],
     '/api/upload': [
       'node_modules/@next/**/*',
