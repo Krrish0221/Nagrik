@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 // @ts-ignore
-import pdf from 'pdf-parse/lib/pdf-parse.js';
+// import pdf from 'pdf-parse/lib/pdf-parse.js';
 
 
 export async function POST(req: Request) {
@@ -17,8 +17,9 @@ export async function POST(req: Request) {
 
         if (file.type === "application/pdf") {
             try {
-                const data = await pdf(buffer);
-                extractedText = data.text;
+                // const data = await pdf(buffer);
+                // extractedText = data.text;
+                extractedText = "[System Note: PDF parsing is temporarily disabled for debugging deployment size.]";
             } catch (pdfError: any) {
                 console.error("PDF Parse Error:", pdfError);
                 // Graceful degradation: If PDF parsing fails (e.g., encryption, images), 
