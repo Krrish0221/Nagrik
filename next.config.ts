@@ -4,9 +4,9 @@ const nextConfig: any = {
   /* config options here */
   productionBrowserSourceMaps: false,
   output: 'standalone',
+  serverExternalPackages: ['pdf-parse'],
   experimental: {
     optimizePackageImports: ['iconoir-react'],
-    serverComponentsExternalPackages: ['pdf-parse', 'iconoir-react'],
   },
   outputFileTracingExcludes: {
     '*': [
