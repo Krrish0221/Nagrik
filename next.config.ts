@@ -18,6 +18,14 @@ const nextConfig: any = {
       'node_modules/@types/**/*',
       'node_modules/sharp/**/*',
     ],
+    '/api/upload': [
+      'node_modules/@next/**/*',
+      'node_modules/next/**/*',
+      'node_modules/react/**/*',
+      'node_modules/react-dom/**/*',
+      'node_modules/lodash/**/*',
+      'node_modules/caniuse-lite/**/*',
+    ],
   },
   async rewrites() {
     return [
