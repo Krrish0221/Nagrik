@@ -17,6 +17,8 @@ const nextConfig: any = {
       'node_modules/iconoir-react/**/*',
       'node_modules/@types/**/*',
       'node_modules/sharp/**/*',
+      '**/*.map',
+      'node_modules/pdf-parse/test/**/*',
     ],
     '/api/upload': [
       'node_modules/@next/**/*',
