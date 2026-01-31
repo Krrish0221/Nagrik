@@ -1,0 +1,14 @@
+Flask
+flask-cors
+python-dotenv
+requests
+streamlit
+pandas
+beautifulsoup4
+langchain
+langchain-core
+langchain-text-splitters
+langchain-chroma
+langchain-huggingface
+langchain-groq
+chromadb
