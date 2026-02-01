@@ -6,7 +6,7 @@ const nextConfig: any = {
   output: 'standalone',
   serverExternalPackages: ['pdf-parse'],
   experimental: {
-    optimizePackageImports: ['iconoir-react'],
+    // optimizePackageImports: ['iconoir-react'],
   },
   outputFileTracingExcludes: {
     '*': [
