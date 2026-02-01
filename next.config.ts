@@ -32,10 +32,11 @@ const nextConfig: any = {
     ],
   },
   async rewrites() {
+    const pythonBackend = process.env.PYTHON_BACKEND_URL || 'http://127.0.0.1:5000';
     return [
       {
         source: '/api/Flask_APP/chat',
-        destination: 'http://127.0.0.1:5000/api/Flask_APP/chat',
+        destination: `${pythonBackend}/api/Flask_APP/chat`,
       },
     ];
   },
