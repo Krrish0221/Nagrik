@@ -11,8 +11,10 @@ from flask_cors import CORS
 
 
 GROQ_AI_KEY = os.environ.get("GROQ_API_KEY")
+print(f"DEBUG: Current Environment Keys: {list(os.environ.keys())}") # Debugging Render
+
 if not GROQ_AI_KEY:
-    raise ValueError("GROQ_API_KEY environment variable is not set. Please add it to your .env file.")
+    raise ValueError(f"GROQ_API_KEY not found! Available keys: {list(os.environ.keys())}")
 
 app = Flask(__name__)
 CORS(app)
