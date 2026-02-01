@@ -9,9 +9,9 @@ langchain
 langchain-core
 langchain-text-splitters
 langchain-chroma
-langchain-huggingface
-langchain-groq
+langchain-community
+fastembed
 chromadb
 gunicorn
-sentence-transformers==2.7.0
-huggingface-hub<1.0.0
+# sentence-transformers removed for OOM fix
+# huggingface-hub removed for OOM fix

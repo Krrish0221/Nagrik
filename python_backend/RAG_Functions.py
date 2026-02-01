@@ -25,12 +25,14 @@ def Consolidated_Embedder(Base_url, log_container=None, progress_bar=None):
     from langchain_core.documents import Document
     from langchain_text_splitters import RecursiveCharacterTextSplitter
     from langchain_chroma import Chroma
-    from langchain_huggingface import HuggingFaceEmbeddings
+    # from langchain_huggingface import HuggingFaceEmbeddings # REMOVED for OOM
+    from langchain_community.embeddings.fastembed import FastEmbedEmbeddings # ADDED for OOM
     import pandas as pd
     import streamlit as st
     
     splitter = RecursiveCharacterTextSplitter(separators=['.','!','\n','\n\n'], chunk_size=500, chunk_overlap=100)
-    embedding_function = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    # embedding_function = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    embedding_function = FastEmbedEmbeddings() # Defaults to BAAI/bge-small-en-v1.5 (Lightweight)
     vectorDB = Chroma(embedding_function=embedding_function, persist_directory='./ChromaDB')
     base_url = Base_url
     to_visit_queue = [base_url]
@@ -133,14 +135,15 @@ def Consolidated_Embedder(Base_url, log_container=None, progress_bar=None):
 def query_answer_generation(query,lang,my_key):
     # Lazy Import for Runtime Performance
     from langchain_chroma import Chroma
-    from langchain_huggingface import HuggingFaceEmbeddings
+    # from langchain_huggingface import HuggingFaceEmbeddings # REMOVED
+    from langchain_community.embeddings.fastembed import FastEmbedEmbeddings # ADDED
     from langchain_groq import ChatGroq
     from langchain_core.messages import SystemMessage, HumanMessage
 
     key=my_key
     
     db = Chroma(persist_directory='./ChromaDB',
-                embedding_function=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2"))
+                embedding_function=FastEmbedEmbeddings()) # Match ingestion model
     similar = db.similarity_search(query, k=3)
 
     context = ""
