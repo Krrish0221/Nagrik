@@ -1,14 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from langchain_core.documents import Document
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_chroma import Chroma
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_groq import ChatGroq
-from langchain_core.messages import SystemMessage, HumanMessage
-import pandas as pd
-import streamlit as st # Optional, for types or if used directly
+# Imports moved to inside functions for Lazy Loading
+# to prevent Render Startup Timeout (OOM/Timeouts)
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+
 
 def Consolidated_Embedder(Base_url, log_container=None, progress_bar=None):
     class DummyContainer:
@@ -22,6 +20,14 @@ def Consolidated_Embedder(Base_url, log_container=None, progress_bar=None):
     if progress_bar is None:
         progress_bar = DummyProgressBar()
 
+    
+    # Lazy Import
+    from langchain_core.documents import Document
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+    from langchain_chroma import Chroma
+    from langchain_huggingface import HuggingFaceEmbeddings
+    import pandas as pd
+    import streamlit as st
     
     splitter = RecursiveCharacterTextSplitter(separators=['.','!','\n','\n\n'], chunk_size=500, chunk_overlap=100)
     embedding_function = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
@@ -125,6 +131,12 @@ def Consolidated_Embedder(Base_url, log_container=None, progress_bar=None):
 
 
 def query_answer_generation(query,lang,my_key):
+    # Lazy Import for Runtime Performance
+    from langchain_chroma import Chroma
+    from langchain_huggingface import HuggingFaceEmbeddings
+    from langchain_groq import ChatGroq
+    from langchain_core.messages import SystemMessage, HumanMessage
+
     key=my_key
     
     db = Chroma(persist_directory='./ChromaDB',

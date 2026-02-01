@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from RAG_Functions import query_answer_generation 
+# from RAG_Functions import query_answer_generation  <-- Removed to prevent top-level load 
 
 # Load .env from the root directory (one level up)
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
@@ -35,6 +35,8 @@ def query():
         if not topic or not lang:
             return jsonify({"error": "Both 'topic' and 'language' fields are required."}), 400
         
+        # Lazy import to ensure fast startup
+        from RAG_Functions import query_answer_generation 
         response = query_answer_generation(query=topic, lang=lang, my_key=GROQ_AI_KEY)
 
         return jsonify({
