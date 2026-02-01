@@ -1,8 +1,8 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Send as SendSolid, Microphone as MicrophoneSolid, CheckCircle as CheckCircleSolid } from "iconoir-react/solid"
-import { Refresh, SoundHigh, SoundOff } from "iconoir-react/regular"
+import { Refresh, SoundHigh, SoundOff, Sparks } from "iconoir-react/regular"
 import { useLanguage } from "@/context/LanguageContext"
 import { useState, useEffect, useRef } from "react"
 
@@ -20,8 +20,36 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
     const [isLoading, setIsLoading] = useState(false)
     const [fileProcessing, setFileProcessing] = useState(false) // New state for file upload
     const [processingStage, setProcessingStage] = useState(0) // 0: Uploading, 1: Analyzing, 2: Extracting, 3: Complete
+
+    // Rotating Status Messages
+    const [loadingMessage, setLoadingMessage] = useState("")
+    const loadingMessages = [
+        "Nagrik Assistant is preparing the answer...",
+        "Consulting the government database...",
+        "Finding relevant schemes for you...",
+        "Translating the information...",
+        "Almost ready..."
+    ]
+
     const chatContainerRef = useRef<HTMLDivElement>(null)
     const lastMessageRef = useRef<HTMLDivElement>(null)
+
+    // Effect to rotate loading messages
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (isLoading && !fileProcessing) {
+            let index = 0;
+            setLoadingMessage(loadingMessages[0]); // Start immediately
+            interval = setInterval(() => {
+                index = (index + 1) % loadingMessages.length;
+                setLoadingMessage(loadingMessages[index]);
+            }, 4000); // Change every 4 seconds
+        } else {
+            setLoadingMessage("");
+        }
+        return () => clearInterval(interval);
+    }, [isLoading, fileProcessing]);
+
 
     // Auto-scroll effect
     // Auto-scroll effect: Frame the Conversation
@@ -135,6 +163,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
         if (!messageContent || !messageContent.trim()) return
 
         setInputValue("")
+        setIsLoading(true); // START LOADING IMMEDIATELLY
 
         // Don't show the huge full text in the UI if it's a file upload (detected by length/prefix)
         const displayContent = messageContent.startsWith("I have uploaded a file named")
@@ -413,11 +442,44 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             </motion.div>
                         )}
 
-                        {/* Standard Typing Indicator (only for chat response) */}
+                        {/* ENHANCED ROTATING LOADING INDICATOR */}
                         {isLoading && !fileProcessing && (
-                            <div className="typing-indicator" id="ai-loader">
-                                <span></span><span></span><span></span>
-                            </div>
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="self-start flex flex-col items-start gap-2 max-w-xs"
+                            >
+                                <div className="rounded-2xl rounded-tl-none bg-white px-4 py-3 shadow-sm border border-amber-100">
+                                    <div className="flex items-center gap-2">
+                                        <div className="flex space-x-1">
+                                            <motion.div
+                                                className="w-2 h-2 bg-amber-500 rounded-full"
+                                                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                                                transition={{ duration: 1, repeat: Infinity, delay: 0 }}
+                                            />
+                                            <motion.div
+                                                className="w-2 h-2 bg-amber-500 rounded-full"
+                                                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                                                transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+                                            />
+                                            <motion.div
+                                                className="w-2 h-2 bg-amber-500 rounded-full"
+                                                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                                                transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <motion.p
+                                    key={loadingMessage} // Animate change
+                                    initial={{ opacity: 0, x: -5 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    className="text-xs text-slate-500 italic ml-2 flex items-center gap-1.5"
+                                >
+                                    <Sparks className="w-3 h-3 text-amber-400" />
+                                    {loadingMessage}
+                                </motion.p>
+                            </motion.div>
                         )}
 
 
