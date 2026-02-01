@@ -2,15 +2,17 @@ from dotenv import load_dotenv
 import os
 from RAG_Functions import query_answer_generation 
 
-load_dotenv() # This loads the .env file!
+# Load .env from the root directory (one level up)
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
+load_dotenv(dotenv_path)
 
 from flask import request, Flask, jsonify
 from flask_cors import CORS
 
 
-GROQ_AI_KEY = os.environ.get("GROQ_AI_KEY")
+GROQ_AI_KEY = os.environ.get("GROQ_API_KEY")
 if not GROQ_AI_KEY:
-    raise ValueError("GROQ_AI_KEY environment variable is not set. Please add it to your .env file.")
+    raise ValueError("GROQ_API_KEY environment variable is not set. Please add it to your .env file.")
 
 app = Flask(__name__)
 CORS(app)

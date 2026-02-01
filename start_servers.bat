@@ -5,7 +5,7 @@ cd /d "%~dp0"
 echo Starting servers in %CD%...
 
 :: Start Python Backend
-start "Nagrik Backend (Python)" cmd /k "cd python_backend && python Flask_APP.py"
+start "Nagrik Backend (Python)" cmd /k "cd /d python_backend && python Flask_APP.py"
 
 :: Start Next.js Frontend
 start "Nagrik Frontend (Next.js)" cmd /k "npm run dev"
