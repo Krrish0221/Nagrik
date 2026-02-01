@@ -14,3 +14,4 @@ langchain-groq
 chromadb
 gunicorn
 sentence-transformers
+huggingface-hub<1.0.0
