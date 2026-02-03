@@ -27,7 +27,7 @@ def home():
 @app.route('/api/Flask_APP/chat', methods = ['POST'])
 def query():
     if request.method == 'GET':
-        return 'Nagrik API is Running'
+        return 'Nagrik RAG API is Running'
     try:
         data = request.json
         topic = data.get('topic')

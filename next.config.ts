@@ -35,8 +35,8 @@ const nextConfig: any = {
     const pythonBackend = process.env.PYTHON_BACKEND_URL || 'http://127.0.0.1:5000';
     return [
       {
-        source: '/api/Flask_APP/chat',
-        destination: `${pythonBackend}/api/Flask_APP/chat`,
+        source: '/api/Flask_APP/:path*',
+        destination: 'https://avinash159-159-nagrik-backend.hf.space/:path*',
       },
     ];
   },
