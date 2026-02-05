@@ -28,8 +28,8 @@
 
 *   **Frontend**: Next.js 15 (App Router), React 19, Tailwind CSS v4, Framer Motion.
 *   **Icons**: Iconoir React.
-*   **Backend**: Python Flask (for AI logic) with **FastEmbed** (Lightweight ONNX-based embeddings).
-*   **AI Engine**: Groq (Llama 3) / OpenAI.
+*   **Backend**: Python Flask acting as the **RAG Engine** (Retrieval-Augmented Generation).
+*   **AI & Embeddings**: Groq (Llama 3) for inference, **FastEmbed** (ONNX) for vector embeddings.
 *   **Vector DB**: ChromaDB.
 *   **OCR**: Tesseract.js (for document scanning).
 
