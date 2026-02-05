@@ -28,29 +28,33 @@
 
 *   **Frontend**: Next.js 15 (App Router), React 19, Tailwind CSS v4, Framer Motion.
 *   **Icons**: Iconoir React.
-*   **Backend**: Python Flask (for AI logic).
+*   **Backend**: Python Flask (for AI logic) with **FastEmbed** (Lightweight ONNX-based embeddings).
 *   **AI Engine**: Groq (Llama 3) / OpenAI.
+*   **Vector DB**: ChromaDB.
 *   **OCR**: Tesseract.js (for document scanning).
 
 ## 📦 Getting Started
 
 ### Prerequisites
 *   Node.js (v18+)
-*   Python (v3.8+)
+*   Python (v3.10+)
 *   API Key (OpenAI or Groq)
 
 ### 1. Backend Setup (AI Server)
-The Python backend handles the heavy lifting for AI responses.
+The Python backend handles the heavy lifting for AI responses using efficient embeddings.
 
 ```bash
-# Navigate to project root
+# Navigate to backend directory
+cd python_backend
+
+# Install dependencies (FastEmbed, LangChain, etc.)
 pip install -r requirements.txt
 
 # Create .env file with your API keys:
 # GROQ_API_KEY=your_key_here
 
 # Run the server
-python api/py.py
+python Flask_APP.py
 ```
 *Server runs on `http://localhost:5000`*
 
@@ -58,6 +62,9 @@ python api/py.py
 The modern UI interface.
 
 ```bash
+# Return to root directory
+cd ..
+
 # Install dependencies
 npm install
 
