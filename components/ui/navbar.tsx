@@ -1,9 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { NavArrowDown as NavArrowDownSolid, Heart as HeartSolid } from "iconoir-react/solid"
-import { Menu, Xmark, Check, User, LogOut, Settings, Suitcase, BookStack } from "iconoir-react/regular"
+import Link from "next/link"
+import { Menu, Xmark, Check, User, LogOut, Settings, Suitcase, BookStack, ShieldCheck } from "iconoir-react/regular"
+import { FireFlame } from "iconoir-react"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/context/LanguageContext"
 import { Language } from "@/lib/translations"
@@ -32,25 +34,27 @@ export function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [isProfileOpen, setIsProfileOpen] = useState(false)
     const [activeModal, setActiveModal] = useState<'skills' | 'helping' | 'schemes' | null>(null)
+    const [isEssentialOpen, setIsEssentialOpen] = useState(false)
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
     const { language, setLanguage, t } = useLanguage()
 
     const languages: { code: Language; label: string }[] = [
         { code: "en", label: "English" },
-        { code: "hi", label: "Hindi" },
-        { code: "gu", label: "Gujarati" },
-        { code: "sa", label: "Sanskrit" },
-        { code: "bho", label: "Bhojpuri" },
-        { code: "ta", label: "Tamil" },
-        { code: "bn", label: "Bengali" },
-        { code: "mr", label: "Marathi" },
-        { code: "te", label: "Telugu" },
-        { code: "ur", label: "Urdu" },
-        { code: "kn", label: "Kannada" },
-        { code: "or", label: "Odia" },
-        { code: "ml", label: "Malayalam" },
-        { code: "pa", label: "Punjabi" },
-        { code: "as", label: "Assamese" },
-        { code: "mai", label: "Maithili" },
+        { code: "hi", label: "हिन्दी" },
+        { code: "gu", label: "ગુજરાતી" },
+        { code: "sa", label: "संस्कृत" },
+        { code: "bho", label: "भोजपुरी" },
+        { code: "ta", label: "தமிழ்" },
+        { code: "bn", label: "বাংলা" },
+        { code: "mr", label: "मराठी" },
+        { code: "te", label: "తెలుగు" },
+        { code: "ur", label: "اردو" },
+        { code: "kn", label: "ಕನ್ನಡ" },
+        { code: "or", label: "ଓଡ଼ିଆ" },
+        { code: "ml", label: "മലയാളം" },
+        { code: "pa", label: "ਪੰਜਾਬੀ" },
+        { code: "as", label: "অসমীয়া" },
+        { code: "mai", label: "मैथिली" },
     ]
 
     const handleLogin = () => {
@@ -71,9 +75,9 @@ export function Navbar() {
                 <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
                     {/* Logo */}
                     <div className="flex items-center gap-2">
-                        <span className="text-2xl font-bold tracking-tight text-slate-900">
+                        <Link href="/" className="text-2xl font-bold tracking-tight text-slate-900 transition-opacity hover:opacity-80">
                             {t("navbar.logo")}
-                        </span>
+                        </Link>
                     </div>
 
                     {/* Middle Navigation (Desktop) */}
@@ -92,6 +96,51 @@ export function Navbar() {
                             <HeartSolid className="h-4 w-4 text-rose-500" />
                             {t("navbar.helping_hand")}
                         </button>
+                        
+                        {/* Essential Services Dropdown */}
+                        <div 
+                            className="relative"
+                            onMouseEnter={() => {
+                                if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                                setIsEssentialOpen(true);
+                            }}
+                            onMouseLeave={() => {
+                                timeoutRef.current = setTimeout(() => {
+                                    setIsEssentialOpen(false);
+                                }, 300);
+                            }}
+                        >
+                            <button
+                                onClick={() => setIsEssentialOpen(!isEssentialOpen)}
+                                className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white rounded-full transition-all"
+                            >
+                                <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                                {t("navbar.essential_services")}
+                                <NavArrowDownSolid className={cn("h-3 w-3 transition-transform", isEssentialOpen ? "rotate-180" : "")} />
+                            </button>
+                            
+                            {isEssentialOpen && (
+                                <div className="absolute top-full left-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl ring-1 ring-slate-900/5 overflow-hidden">
+                                    <Link 
+                                        href="/services/cybercrime"
+                                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-left"
+                                        onClick={() => setIsEssentialOpen(false)}
+                                    >
+                                        <ShieldCheck className="h-4 w-4 text-indigo-600" />
+                                        {t("navbar.cybercrime")}
+                                    </Link>
+                                    <Link 
+                                        href="/services/gas-refill" 
+                                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-left"
+                                        onClick={() => setIsEssentialOpen(false)}
+                                    >
+                                        <FireFlame className="h-4 w-4 text-orange-500" />
+                                        {t("navbar.gas_refill")}
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+
                         <button
                             onClick={() => setActiveModal('schemes')}
                             className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white rounded-full transition-all"
@@ -242,6 +291,38 @@ export function Navbar() {
                                     <HeartSolid className="h-5 w-5 text-rose-500" />
                                     {t("navbar.helping_hand")}
                                 </button>
+
+                                {/* Essential Services Mobile */}
+                                <div className="flex flex-col gap-1">
+                                    <button
+                                        onClick={() => setIsEssentialOpen(!isEssentialOpen)}
+                                        className="flex items-center justify-between gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <ShieldCheck className="h-5 w-5 text-emerald-600" />
+                                            {t("navbar.essential_services")}
+                                        </div>
+                                        <NavArrowDownSolid className={cn("h-4 w-4 transition-transform", isEssentialOpen ? "rotate-180" : "")} />
+                                    </button>
+                                    
+                                    {isEssentialOpen && (
+                                        <div className="ml-4 flex flex-col gap-2 border-l-2 border-slate-100 pl-4 mt-1">
+                                            <Link 
+                                                href="/services/cybercrime"
+                                                className="flex items-center gap-3 rounded-lg py-2 text-sm font-medium text-slate-600 hover:text-slate-900"
+                                                onClick={() => setIsMenuOpen(false)}
+                                            >
+                                                <ShieldCheck className="h-4 w-4 text-indigo-600" />
+                                                {t("navbar.cybercrime")}
+                                            </Link>
+                                            <Link href="/services/gas-refill" className="flex items-center gap-3 rounded-lg py-2 text-sm font-medium text-slate-600 hover:text-slate-900">
+                                                <FireFlame className="h-4 w-4 text-orange-500" />
+                                                <FireFlame className="h-4 w-4 text-orange-500" />
+                                                {t("navbar.gas_refill")}
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
                                 <button
                                     onClick={() => { setActiveModal('schemes'); setIsMenuOpen(false); }}
                                     className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
