@@ -322,7 +322,6 @@ export function Navbar() {
                                             </Link>
                                             <Link href="/services/gas-refill" className="flex items-center gap-3 rounded-lg py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
                                                 <FireFlame className="h-4 w-4 text-orange-500" />
-                                                <FireFlame className="h-4 w-4 text-orange-500" />
                                                 {t("navbar.gas_refill")}
                                             </Link>
                                         </div>
