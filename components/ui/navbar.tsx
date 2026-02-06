@@ -11,13 +11,14 @@ import { useLanguage } from "@/context/LanguageContext"
 import { Language } from "@/lib/translations"
 import { ProfileDialog, UserProfile } from "./profile-dialog"
 import { SkillsHubModal, HelpingHandModal, SchemesListModal } from "./nav-dialogs"
+import { SettingsDialog } from "./settings-dialog"
 
 // Mock Data for Nagrik Profile
 const MOCK_USER: UserProfile = {
     name: "Krish P",
     email: "krish02@gmail.com",
     photo: "/profile_avatar.png",
-    dob: "14 Feb 1995",
+    dob: "31 Feb 1995",
     age: 30,
     profession: "Agri-Entrepreneur & Farmer",
     skills: ["Organic Farming", "Crop Management", "Market Analysis", "Supply Chain"],
@@ -35,6 +36,7 @@ export function Navbar() {
     const [isProfileOpen, setIsProfileOpen] = useState(false)
     const [activeModal, setActiveModal] = useState<'skills' | 'helping' | 'schemes' | null>(null)
     const [isEssentialOpen, setIsEssentialOpen] = useState(false)
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false)
     const timeoutRef = useRef<NodeJS.Timeout | null>(null)
     const { language, setLanguage, t } = useLanguage()
 
@@ -70,21 +72,21 @@ export function Navbar() {
             <motion.nav
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
-                className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-white/60 backdrop-blur-xl transition-all"
+                className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 dark:border-white/5 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl transition-all"
             >
                 <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
                     {/* Logo */}
                     <div className="flex items-center gap-2">
-                        <Link href="/" className="text-2xl font-bold tracking-tight text-slate-900 transition-opacity hover:opacity-80">
+                        <Link href="/" className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white transition-opacity hover:opacity-80">
                             {t("navbar.logo")}
                         </Link>
                     </div>
 
                     {/* Middle Navigation (Desktop) */}
-                    <div className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1 rounded-full border border-slate-200/50">
+                    <div className="hidden md:flex items-center gap-1 bg-slate-100/50 dark:bg-slate-800/50 p-1 rounded-full border border-slate-200/50 dark:border-slate-700/50">
                         <button
                             onClick={() => setActiveModal('skills')}
-                            className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white rounded-full transition-all"
+                            className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-full transition-all"
                         >
                             <Suitcase className="h-4 w-4 text-blue-600" />
                             {t("navbar.skills_hub")}
@@ -96,9 +98,9 @@ export function Navbar() {
                             <HeartSolid className="h-4 w-4 text-rose-500" />
                             {t("navbar.helping_hand")}
                         </button>
-                        
+
                         {/* Essential Services Dropdown */}
-                        <div 
+                        <div
                             className="relative"
                             onMouseEnter={() => {
                                 if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -112,25 +114,25 @@ export function Navbar() {
                         >
                             <button
                                 onClick={() => setIsEssentialOpen(!isEssentialOpen)}
-                                className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white rounded-full transition-all"
+                                className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-full transition-all"
                             >
                                 <ShieldCheck className="h-4 w-4 text-emerald-600" />
                                 {t("navbar.essential_services")}
                                 <NavArrowDownSolid className={cn("h-3 w-3 transition-transform", isEssentialOpen ? "rotate-180" : "")} />
                             </button>
-                            
+
                             {isEssentialOpen && (
-                                <div className="absolute top-full left-0 mt-2 w-56 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl ring-1 ring-slate-900/5 overflow-hidden">
-                                    <Link 
+                                <div className="absolute top-full left-0 mt-2 w-56 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-1.5 shadow-xl ring-1 ring-slate-900/5 overflow-hidden">
+                                    <Link
                                         href="/services/cybercrime"
-                                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-left"
+                                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors text-left"
                                         onClick={() => setIsEssentialOpen(false)}
                                     >
                                         <ShieldCheck className="h-4 w-4 text-indigo-600" />
                                         {t("navbar.cybercrime")}
                                     </Link>
-                                    <Link 
-                                        href="/services/gas-refill" 
+                                    <Link
+                                        href="/services/gas-refill"
                                         className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors text-left"
                                         onClick={() => setIsEssentialOpen(false)}
                                     >
@@ -143,7 +145,7 @@ export function Navbar() {
 
                         <button
                             onClick={() => setActiveModal('schemes')}
-                            className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white rounded-full transition-all"
+                            className="flex items-center gap-2 px-4 py-1.5 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white dark:hover:bg-slate-800 rounded-full transition-all"
                         >
                             <BookStack className="h-4 w-4 text-amber-600" />
                             {t("navbar.schemes")}
@@ -159,14 +161,14 @@ export function Navbar() {
                             </button>
                             {/* Dropdown */}
                             <div className="absolute right-0 top-full hidden w-40 pt-2 group-hover:block">
-                                <div className="rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl ring-1 ring-slate-900/5 max-h-[300px] overflow-y-auto">
+                                <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-1.5 shadow-xl ring-1 ring-slate-900/5 max-h-[300px] overflow-y-auto">
                                     {languages.map((lang) => (
                                         <button
                                             key={lang.code}
                                             onClick={() => setLanguage(lang.code)}
                                             className={cn(
-                                                "flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors hover:bg-slate-50",
-                                                language === lang.code ? "bg-slate-50 font-medium text-amber-600" : "text-slate-600"
+                                                "flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors hover:bg-slate-50 dark:hover:bg-slate-800",
+                                                language === lang.code ? "bg-slate-50 dark:bg-slate-800 font-medium text-amber-600" : "text-slate-600 dark:text-slate-300"
                                             )}
                                         >
                                             {lang.label}
@@ -210,34 +212,37 @@ export function Navbar() {
 
                                     {/* Profile Dropdown */}
                                     <div className="absolute right-0 top-full hidden pt-2 group-hover:block w-64">
-                                        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl ring-1 ring-slate-900/5">
-                                            <div className="bg-slate-50 p-4 border-b border-slate-100">
+                                        <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 shadow-xl ring-1 ring-slate-900/5">
+                                            <div className="bg-slate-50 dark:bg-slate-900 p-4 border-b border-slate-100 dark:border-slate-800">
                                                 <div className="flex items-center gap-3">
                                                     <div className="h-10 w-10 rounded-full bg-amber-500 overflow-hidden border-2 border-white shadow-sm">
                                                         <img src={MOCK_USER.photo} alt="Profile" className="h-full w-full object-cover" />
                                                     </div>
                                                     <div>
-                                                        <p className="font-semibold text-slate-900">{MOCK_USER.name}</p>
-                                                        <p className="text-xs text-slate-500">{MOCK_USER.email}</p>
+                                                        <p className="font-semibold text-slate-900 dark:text-white">{MOCK_USER.name}</p>
+                                                        <p className="text-xs text-slate-500 dark:text-slate-400">{MOCK_USER.email}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="p-1.5">
                                                 <button
                                                     onClick={() => setIsProfileOpen(true)}
-                                                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                                                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
                                                 >
                                                     <User className="h-4 w-4" />
                                                     My Profile
                                                 </button>
-                                                <button className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                                                <button
+                                                    onClick={() => setIsSettingsOpen(true)}
+                                                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
+                                                >
                                                     <Settings className="h-4 w-4" />
                                                     Settings
                                                 </button>
-                                                <div className="my-1 border-t border-slate-100" />
+                                                <div className="my-1 border-t border-slate-100 dark:border-slate-800" />
                                                 <button
                                                     onClick={handleLogout}
-                                                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+                                                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                                                 >
                                                     <LogOut className="h-4 w-4" />
                                                     Logout
@@ -261,16 +266,16 @@ export function Navbar() {
 
                 {/* Mobile Menu */}
                 {isMenuOpen && (
-                    <div className="absolute top-16 left-0 w-full border-b border-slate-200 bg-white p-4 shadow-lg md:hidden">
+                    <div className="absolute top-16 left-0 w-full border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-4 shadow-lg md:hidden">
                         <div className="flex flex-col gap-4">
                             {isLoggedIn && (
-                                <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100 mb-2">
+                                <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800 mb-2">
                                     <div className="h-10 w-10 rounded-full bg-amber-500 overflow-hidden border-2 border-white shadow-sm">
                                         <img src={MOCK_USER.photo} alt="Profile" className="h-full w-full object-cover" />
                                     </div>
                                     <div>
-                                        <p className="font-semibold text-slate-900">{MOCK_USER.name}</p>
-                                        <p className="text-xs text-slate-500">{MOCK_USER.email}</p>
+                                        <p className="font-semibold text-slate-900 dark:text-white">{MOCK_USER.name}</p>
+                                        <p className="text-xs text-slate-500 dark:text-slate-400">{MOCK_USER.email}</p>
                                     </div>
                                 </div>
                             )}
@@ -279,14 +284,14 @@ export function Navbar() {
                             <div className="grid grid-cols-1 gap-2">
                                 <button
                                     onClick={() => { setActiveModal('skills'); setIsMenuOpen(false); }}
-                                    className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
+                                    className="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-900 px-4 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
                                 >
                                     <Suitcase className="h-5 w-5 text-blue-600" />
                                     {t("navbar.skills_hub")}
                                 </button>
                                 <button
                                     onClick={() => { setActiveModal('helping'); setIsMenuOpen(false); }}
-                                    className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
+                                    className="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-900 px-4 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
                                 >
                                     <HeartSolid className="h-5 w-5 text-rose-500" />
                                     {t("navbar.helping_hand")}
@@ -296,7 +301,7 @@ export function Navbar() {
                                 <div className="flex flex-col gap-1">
                                     <button
                                         onClick={() => setIsEssentialOpen(!isEssentialOpen)}
-                                        className="flex items-center justify-between gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
+                                        className="flex items-center justify-between gap-3 rounded-lg bg-slate-50 dark:bg-slate-900 px-4 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
                                     >
                                         <div className="flex items-center gap-3">
                                             <ShieldCheck className="h-5 w-5 text-emerald-600" />
@@ -304,18 +309,18 @@ export function Navbar() {
                                         </div>
                                         <NavArrowDownSolid className={cn("h-4 w-4 transition-transform", isEssentialOpen ? "rotate-180" : "")} />
                                     </button>
-                                    
+
                                     {isEssentialOpen && (
                                         <div className="ml-4 flex flex-col gap-2 border-l-2 border-slate-100 pl-4 mt-1">
-                                            <Link 
+                                            <Link
                                                 href="/services/cybercrime"
-                                                className="flex items-center gap-3 rounded-lg py-2 text-sm font-medium text-slate-600 hover:text-slate-900"
+                                                className="flex items-center gap-3 rounded-lg py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                                                 onClick={() => setIsMenuOpen(false)}
                                             >
                                                 <ShieldCheck className="h-4 w-4 text-indigo-600" />
                                                 {t("navbar.cybercrime")}
                                             </Link>
-                                            <Link href="/services/gas-refill" className="flex items-center gap-3 rounded-lg py-2 text-sm font-medium text-slate-600 hover:text-slate-900">
+                                            <Link href="/services/gas-refill" className="flex items-center gap-3 rounded-lg py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
                                                 <FireFlame className="h-4 w-4 text-orange-500" />
                                                 <FireFlame className="h-4 w-4 text-orange-500" />
                                                 {t("navbar.gas_refill")}
@@ -325,7 +330,7 @@ export function Navbar() {
                                 </div>
                                 <button
                                     onClick={() => { setActiveModal('schemes'); setIsMenuOpen(false); }}
-                                    className="flex items-center gap-3 rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
+                                    className="flex items-center gap-3 rounded-lg bg-slate-50 dark:bg-slate-900 px-4 py-3 text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
                                 >
                                     <BookStack className="h-5 w-5 text-amber-600" />
                                     {t("navbar.schemes")}
@@ -333,7 +338,7 @@ export function Navbar() {
                             </div>
 
                             <div className="flex flex-col gap-2">
-                                <p className="text-sm font-medium text-slate-600">Select Language:</p>
+                                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Select Language:</p>
                                 {languages.map((lang) => (
                                     <button
                                         key={lang.code}
@@ -342,8 +347,8 @@ export function Navbar() {
                                             setIsMenuOpen(false)
                                         }}
                                         className={cn(
-                                            "text-left text-sm p-2 rounded-md hover:bg-slate-50",
-                                            language === lang.code && "bg-slate-100 font-medium"
+                                            "text-left text-sm p-2 rounded-md hover:bg-slate-50 dark:hover:bg-slate-800 dark:text-slate-300",
+                                            language === lang.code && "bg-slate-100 dark:bg-slate-800 font-medium text-slate-900 dark:text-white"
                                         )}
                                     >
                                         {lang.label}
@@ -404,6 +409,7 @@ export function Navbar() {
             <SkillsHubModal isOpen={activeModal === 'skills'} onClose={() => setActiveModal(null)} />
             <HelpingHandModal isOpen={activeModal === 'helping'} onClose={() => setActiveModal(null)} />
             <SchemesListModal isOpen={activeModal === 'schemes'} onClose={() => setActiveModal(null)} />
+            <SettingsDialog isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
         </>
     )
 }

@@ -547,10 +547,10 @@ export function SkillsHubModal({ isOpen, onClose }: ModalProps) {
         <ModalWrapper onClose={onClose} title={t.skills_hub_title} color="bg-black">
             <div className="space-y-6">
                 {/* Recommended Section */}
-                <div className="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-4 border border-blue-100">
+                <div className="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40 p-4 border border-blue-100 dark:border-blue-900/30">
                     <div className="flex items-center gap-2 mb-3">
                         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">★</span>
-                        <h3 className="font-bold text-blue-900">{t.recommended}</h3>
+                        <h3 className="font-bold text-blue-900 dark:text-blue-300">{t.recommended}</h3>
                     </div>
                     <div className="grid gap-3">
                         {JOBS_DATA.filter(j => j.isRecommended).map(job => (
@@ -561,7 +561,7 @@ export function SkillsHubModal({ isOpen, onClose }: ModalProps) {
 
                 {/* All Jobs */}
                 <div>
-                    <h3 className="mb-3 font-bold text-slate-700">{t.all_jobs}</h3>
+                    <h3 className="mb-3 font-bold text-slate-700 dark:text-slate-300">{t.all_jobs}</h3>
                     <div className="grid gap-3">
                         {JOBS_DATA.filter(j => !j.isRecommended).map(job => (
                             <JobCard key={job.id} job={job} language={language} t={t} />
@@ -588,27 +588,27 @@ function JobCard({ job, recommended, language, t }: { job: Job, recommended?: bo
     }
 
     return (
-        <div key={language} className={`group relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-lg p-4 transition-all hover:shadow-md ${recommended ? "bg-white border border-blue-200" : "bg-slate-50 border border-slate-100 hover:border-slate-300"}`}>
+        <div key={language} className={`group relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-lg p-4 transition-all hover:shadow-md ${recommended ? "bg-white dark:bg-slate-900 border border-blue-200 dark:border-blue-800" : "bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-600"}`}>
             <div>
                 <div className="flex items-start justify-between">
                     <div>
-                        <h4 className="font-bold text-slate-900">{content.title}</h4>
-                        <p className="text-sm font-medium text-slate-600">{content.company}</p>
+                        <h4 className="font-bold text-slate-900 dark:text-white">{content.title}</h4>
+                        <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{content.company}</p>
                     </div>
-                    <span className="flex items-center gap-1 text-[10px] font-medium text-slate-400 bg-slate-100 rounded px-1.5 py-0.5 whitespace-nowrap ml-2">
+                    <span className="flex items-center gap-1 text-[10px] font-medium text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 rounded px-1.5 py-0.5 whitespace-nowrap ml-2">
                         <Clock className="h-3 w-3" /> {resolveTime()}
                     </span>
                 </div>
 
                 <div className="mt-2 flex flex-wrap gap-2 text-xs">
-                    <span className="flex items-center gap-1 rounded bg-slate-200 px-2 py-0.5 text-slate-700">
+                    <span className="flex items-center gap-1 rounded bg-slate-200 dark:bg-slate-700 px-2 py-0.5 text-slate-700 dark:text-slate-300">
                         <MapPin className="h-3 w-3" /> {content.location}
                     </span>
-                    <span className="flex items-center gap-1 rounded bg-green-100 px-2 py-0.5 text-green-700 font-medium">
+                    <span className="flex items-center gap-1 rounded bg-green-100 dark:bg-green-900/30 px-2 py-0.5 text-green-700 dark:text-green-400 font-medium">
                         <Coins className="h-3 w-3" /> {content.salary}
                     </span>
                     {content.tags.map(tag => (
-                        <span key={tag} className="rounded border border-slate-200 px-2 py-0.5 text-slate-500">{tag}</span>
+                        <span key={tag} className="rounded border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-slate-500 dark:text-slate-400">{tag}</span>
                     ))}
                 </div>
             </div>
@@ -618,12 +618,12 @@ function JobCard({ job, recommended, language, t }: { job: Job, recommended?: bo
                     href={job.gmapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 transition-colors hover:bg-slate-50 hover:text-slate-900 w-full group-hover:ring-slate-300"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-white dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 transition-colors hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white w-full group-hover:ring-slate-300 dark:group-hover:ring-slate-600"
                 >
                     {t.view_map} <ArrowRight className="h-3.5 w-3.5" />
                 </a>
                 <button
-                    className="flex items-center justify-center gap-2 rounded-lg bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-100 transition-colors w-full"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 px-4 py-2 text-sm font-semibold text-blue-700 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors w-full"
                     onClick={() => alert(`Contacting ${content.company} at ${job.contact}`)}
                 >
                     <Phone className="h-3.5 w-3.5" />
@@ -660,7 +660,7 @@ export function HelpingHandModal({ isOpen, onClose }: ModalProps) {
                     <input
                         type="text"
                         placeholder={t.search_placeholder}
-                        className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-10 pr-4 text-sm outline-none focus:border-rose-400 focus:ring-4 focus:ring-rose-100"
+                        className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-3 pl-10 pr-4 text-sm outline-none focus:border-rose-400 focus:ring-4 focus:ring-rose-100 dark:text-white dark:focus:ring-rose-900/30"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
@@ -671,22 +671,22 @@ export function HelpingHandModal({ isOpen, onClose }: ModalProps) {
                         filteredNGOs.map(ngo => {
                             const content = getNGOContent(ngo, language);
                             return (
-                                <div key={ngo.id} className="rounded-xl border border-slate-100 bg-white p-4 shadow-sm hover:border-rose-200 hover:shadow-md transition-all">
+                                <div key={ngo.id} className="rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm hover:border-rose-200 dark:hover:border-rose-800 hover:shadow-md transition-all">
                                     <div className="flex items-start justify-between">
                                         <div>
-                                            <h4 className="font-bold text-slate-900 text-lg">{content.name}</h4>
+                                            <h4 className="font-bold text-slate-900 dark:text-white text-lg">{content.name}</h4>
                                             <div className="flex items-center gap-2 mt-1">
                                                 <HeartSolid className="h-3.5 w-3.5 text-rose-500" />
-                                                <span className="text-sm font-medium text-rose-600">{content.cause}</span>
+                                                <span className="text-sm font-medium text-rose-600 dark:text-rose-400">{content.cause}</span>
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <p className="text-xs font-semibold text-slate-500 flex items-center justify-end gap-1">
+                                            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center justify-end gap-1">
                                                 <MapPin className="h-3 w-3" /> {content.location}
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="mt-4 flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-600">
+                                    <div className="mt-4 flex items-center gap-2 rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2 text-sm text-slate-600 dark:text-slate-300">
                                         <Phone className="h-4 w-4" />
                                         <span className="font-mono">{ngo.contact}</span>
                                     </div>
@@ -729,20 +729,20 @@ export function SchemesListModal({ isOpen, onClose }: ModalProps) {
                     {schemesData.map((scheme, idx) => {
                         const content = scheme[language] as SchemeContent || scheme["en"]
                         return (
-                            <div key={idx} className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 shadow-sm hover:border-amber-300 hover:shadow-md transition-all">
+                            <div key={idx} className="flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm hover:border-amber-300 dark:hover:border-amber-600 hover:shadow-md transition-all">
                                 <div>
-                                    <h4 className="font-bold text-slate-900 leading-tight mb-2">{content.title}</h4>
-                                    <span className="inline-block rounded-full bg-amber-50 px-2 py-1 text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-2">
+                                    <h4 className="font-bold text-slate-900 dark:text-white leading-tight mb-2">{content.title}</h4>
+                                    <span className="inline-block rounded-full bg-amber-50 dark:bg-amber-900/30 px-2 py-1 text-[10px] font-bold text-amber-700 dark:text-amber-500 uppercase tracking-wider mb-2">
                                         {content.highlight}
                                     </span>
-                                    <p className="text-sm text-slate-600 line-clamp-3 mb-4">
+                                    <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-4">
                                         {content.desc}
                                     </p>
                                 </div>
-                                <div className="pt-3 border-t border-slate-100 mt-auto">
+                                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 mt-auto">
                                     <button
                                         onClick={() => handleSchemeClick(scheme)}
-                                        className="text-xs font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 w-full"
+                                        className="text-xs font-bold text-amber-600 dark:text-amber-500 hover:text-amber-700 dark:hover:text-amber-400 flex items-center gap-1 w-full"
                                     >
                                         {t.view_details} <ArrowRight className="h-3 w-3" />
                                     </button>
@@ -781,7 +781,7 @@ function ModalWrapper({ children, onClose, title, color }: { children: React.Rea
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 className="fixed left-1/2 top-1/2 z-[70] w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 p-4"
             >
-                <div className="flex max-h-[90vh] flex-col overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-slate-900/5">
+                <div className="flex max-h-[90vh] flex-col overflow-hidden rounded-3xl bg-white dark:bg-slate-950 shadow-2xl ring-1 ring-slate-900/5 dark:ring-white/10">
                     <div className={`flex items-center justify-between px-6 py-4 ${color}`}>
                         <h2 className="text-xl font-bold text-white">{title}</h2>
                         <button
@@ -791,7 +791,7 @@ function ModalWrapper({ children, onClose, title, color }: { children: React.Rea
                             <Xmark className="h-5 w-5" strokeWidth={2.5} />
                         </button>
                     </div>
-                    <div className="flex-1 overflow-y-auto p-6 bg-slate-50/50">
+                    <div className="flex-1 overflow-y-auto p-6 bg-slate-50/50 dark:bg-slate-950">
                         {children}
                     </div>
                 </div>

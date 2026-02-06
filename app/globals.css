@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
@@ -170,13 +172,157 @@
   --ring: 38 92% 50%;
 }
 
+/* High Contrast Mode Overrides */
+/* High Contrast Mode Overrides */
+.high-contrast {
+  /* Enforce variable definitions for anything using them */
+  --background: 0 0% 100%;
+  /* Pure White */
+  --foreground: 0 0% 0%;
+  /* Pure Black */
+
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+
+  --primary: 0 0% 0%;
+  /* Black Primary */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 0 0% 0%;
+
+  --muted: 0 0% 90%;
+  --muted-foreground: 0 0% 0%;
+
+  --accent: 0 0% 90%;
+  --accent-foreground: 0 0% 0%;
+
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 0%;
+  /* Black Borders */
+  --input: 0 0% 0%;
+  --ring: 0 0% 0%;
+}
+
+.high-contrast.dark {
+  /* High Contrast Dark Mode */
+  --background: 0 0% 0%;
+  /* Pure Black */
+  --foreground: 0 0% 100%;
+  /* Pure White */
+
+  --card: 0 0% 0%;
+  --card-foreground: 0 0% 100%;
+
+  --popover: 0 0% 0%;
+  --popover-foreground: 0 0% 100%;
+
+  --primary: 0 0% 100%;
+  /* White Primary */
+  --primary-foreground: 0 0% 0%;
+
+  --secondary: 0 0% 20%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 0 0% 20%;
+  --muted-foreground: 0 0% 100%;
+
+  --accent: 0 0% 20%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 0 0% 100%;
+  /* White Borders */
+  --input: 0 0% 100%;
+  --ring: 0 0% 100%;
+}
+
+/* 
+  NUCLEAR OPTION: Aggressively override styles for High Contrast 
+  This mimics Windows High Contrast Mode behavior.
+*/
+/* 
+  NUCLEAR OPTION: Aggressively override styles for High Contrast 
+  This mimics Windows High Contrast Mode behavior.
+*/
+:root.high-contrast *,
+:root.high-contrast *::before,
+:root.high-contrast *::after {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  /* Remove gradients/images */
+}
+
+/* Dark Mode High Contrast */
+:root.high-contrast.dark *,
+:root.high-contrast.dark *::before,
+:root.high-contrast.dark *::after {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+/* Re-apply borders to inputs/buttons so they remain visible */
+:root.high-contrast button,
+:root.high-contrast input,
+:root.high-contrast select,
+:root.high-contrast textarea,
+:root.high-contrast [role="button"] {
+  border: 2px solid currentColor !important;
+}
+
+/* Exclusions: Images, Videos, Icons need to preserve their colors */
+:root.high-contrast img,
+:root.high-contrast video,
+:root.high-contrast iframe,
+:root.high-contrast canvas,
+:root.high-contrast svg,
+:root.high-contrast svg * {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+/* Ensure SVG icons take the text color unless specifically colored */
+:root.high-contrast svg {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Allow specific overrides to explicitly opt-out if needed */
+:root.high-contrast [data-high-contrast="ignore"] {
+  background-color: initial !important;
+  color: initial !important;
+}
+
+/* 
+  Simplified Mode (Lite) 
+  Disables all animations and transitions for performance.
+*/
+:root.simplified-mode * {
+  animation-duration: 0.001s !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001s !important;
+  scroll-behavior: auto !important;
+}
+
 @layer base {
   * {
     @apply border-border;
   }
 
   body {
-    @apply text-foreground;
+    @apply bg-background text-foreground;
     min-height: 100vh;
     position: relative;
   }
@@ -204,6 +350,10 @@
       100% 100%;
     filter: blur(30px);
     transform: scale(1.2);
+  }
+
+  .dark body::before {
+    display: none;
   }
 }
 

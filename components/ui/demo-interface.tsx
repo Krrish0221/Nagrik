@@ -294,27 +294,27 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
     }
 
     return (
-        <section className="bg-slate-50 py-20" id="nagrik-chat-widget">
+        <section className="bg-slate-50 dark:bg-slate-950/50 py-20" id="nagrik-chat-widget">
             <div className="container px-4">
                 <div className="mb-12 text-center">
-                    <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                    <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
                         {t("demo.heading")}
                     </h2>
-                    <p className="mt-4 text-lg text-slate-600">
+                    <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
                         {t("demo.subheading")}
                     </p>
                 </div>
 
-                <div className="mx-auto max-w-md overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
+                <div className="mx-auto max-w-md overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl">
                     {/* Header */}
-                    <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 bg-slate-50 p-4">
+                    <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/95 p-4">
                         <div className="flex items-center gap-3">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-500">
                                 <span className="font-bold">N</span>
                             </div>
                             <div>
-                                <h3 className="font-semibold text-slate-900">{t("demo.assistantName")}</h3>
-                                <p className="text-xs text-green-600">{t("demo.status")}</p>
+                                <h3 className="font-semibold text-slate-900 dark:text-gray-100">{t("demo.assistantName")}</h3>
+                                <p className="text-xs text-green-600 dark:text-green-400">{t("demo.status")}</p>
                             </div>
                         </div>
 
@@ -343,14 +343,14 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                     {/* Chat Area */}
                     <div
                         ref={chatContainerRef}
-                        className="flex h-[400px] flex-col gap-4 bg-stone-50/50 p-4 overflow-y-auto"
+                        className="flex h-[400px] flex-col gap-4 bg-stone-50/50 dark:bg-slate-950/50 p-4 overflow-y-auto"
                     >
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="self-start rounded-2xl rounded-tl-none bg-white px-4 py-3 text-slate-800 shadow-sm"
+                            className="self-start rounded-2xl rounded-tl-none bg-white dark:bg-slate-800 px-4 py-3 text-slate-800 dark:text-slate-200 shadow-sm"
                         >
                             <p>{t("demo.chat1")}</p>
                         </motion.div>
@@ -370,7 +370,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 1.0 }}
-                            className="self-start rounded-2xl rounded-tl-none bg-white px-4 py-3 text-slate-800 shadow-sm"
+                            className="self-start rounded-2xl rounded-tl-none bg-white dark:bg-slate-800 px-4 py-3 text-slate-800 dark:text-slate-200 shadow-sm"
                         >
                             <p>{t("demo.chat3")}</p>
                         </motion.div>
@@ -380,7 +380,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             <div
                                 key={idx}
                                 ref={idx === messages.length - 1 ? lastMessageRef : null}
-                                className={`message-bubble self-${msg.role === 'user' ? 'end' : 'start'} rounded-2xl ${msg.role === 'user' ? 'user-message rounded-tr-none bg-amber-500 text-white' : 'ai-message rounded-tl-none bg-white text-slate-800'} px-4 py-3 shadow-sm ${language === 'ur' ? 'text-right' : ''}`}
+                                className={`message-bubble self-${msg.role === 'user' ? 'end' : 'start'} rounded-2xl ${msg.role === 'user' ? 'user-message rounded-tr-none bg-amber-500 text-white' : 'ai-message rounded-tl-none bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200'} px-4 py-3 shadow-sm ${language === 'ur' ? 'text-right' : ''}`}
                                 dir={language === 'ur' ? 'rtl' : 'ltr'}
                             >
                                 <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -401,7 +401,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                     scale: { duration: 0.3 },
                                     boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                                 }}
-                                className="self-start rounded-2xl rounded-tl-none bg-white p-4 shadow-md border border-amber-100 max-w-xs w-full"
+                                className="self-start rounded-2xl rounded-tl-none bg-white dark:bg-slate-800 p-4 shadow-md border border-amber-100 dark:border-amber-900/30 max-w-xs w-full"
                             >
                                 <div className="flex items-center gap-3 mb-3">
                                     <div className="relative flex items-center justify-center w-8 h-8">
@@ -423,7 +423,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                         )}
                                     </div>
                                     <div className="flex-1">
-                                        <p className="text-sm font-semibold text-slate-700">
+                                        <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">
                                             {processingStage === 0 && "Uploading..."}
                                             {processingStage === 1 && "Analyzing Text..."}
                                             {processingStage === 2 && "Extracting Details..."}
@@ -431,7 +431,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                         </p>
                                     </div>
                                 </div>
-                                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-700/50 rounded-full overflow-hidden">
                                     <motion.div
                                         className={`h-full ${processingStage === 3 ? 'bg-green-500' : 'bg-amber-500'}`}
                                         initial={{ width: "0%" }}
@@ -449,7 +449,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                 animate={{ opacity: 1, y: 0 }}
                                 className="self-start flex flex-col items-start gap-2 max-w-xs"
                             >
-                                <div className="rounded-2xl rounded-tl-none bg-white px-4 py-3 shadow-sm border border-amber-100">
+                                <div className="rounded-2xl rounded-tl-none bg-white dark:bg-slate-800 px-4 py-3 shadow-sm border border-amber-100 dark:border-amber-900/30">
                                     <div className="flex items-center gap-2">
                                         <div className="flex space-x-1">
                                             <motion.div
@@ -490,17 +490,17 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                             transition={{ delay: 1.4 }}
                             className="self-center mt-auto mb-2"
                         >
-                            <div className="flex items-center gap-2 px-3 py-1 bg-slate-200 rounded-full text-xs text-slate-600">
+                            <div className="flex items-center gap-2 px-3 py-1 bg-slate-200 dark:bg-slate-800 rounded-full text-xs text-slate-600 dark:text-slate-400">
                                 <MicrophoneSolid className="w-3 h-3 animate-pulse" /> {t("hero.listening")}
                             </div>
                         </motion.div>
                     </div>
 
                     {/* Input Area */}
-                    <div className="border-t border-slate-100 bg-white p-4" dir={language === 'ur' ? 'rtl' : 'ltr'}>
-                        <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2">
+                    <div className="border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4" dir={language === 'ur' ? 'rtl' : 'ltr'}>
+                        <div className="flex items-center gap-2 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 px-4 py-2">
                             {/* File Upload Button */}
-                            <label className="cursor-pointer p-2 rounded-full hover:bg-slate-200 text-slate-400 transition-colors">
+                            <label className="cursor-pointer p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 dark:text-slate-500 transition-colors">
                                 <input
                                     type="file"
                                     className="hidden"
@@ -515,7 +515,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
 
                             <button
                                 onClick={startListening}
-                                className={`rounded-full p-2 transition-colors ${isListening ? 'bg-red-100 text-red-600' : 'hover:bg-slate-200 text-slate-400'}`}
+                                className={`rounded-full p-2 transition-colors ${isListening ? 'bg-red-100 text-red-600' : 'hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 dark:text-slate-500'}`}
                                 title="Tap to speak"
                             >
                                 <MicrophoneSolid className={`h-5 w-5 ${isListening ? 'animate-pulse' : ''}`} />
@@ -529,7 +529,7 @@ export function DemoInterface({ voiceTrigger, onVoiceTriggerClear }: DemoInterfa
                                     if (e.key === 'Enter') handleSend()
                                 }}
                                 placeholder={t("demo.placeholder")}
-                                className={`flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400 ${language === 'ur' ? 'text-right' : ''}`}
+                                className={`flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400 text-slate-900 dark:text-slate-100 ${language === 'ur' ? 'text-right' : ''}`}
                                 suppressHydrationWarning={true}
                                 disabled={fileProcessing}
                             />

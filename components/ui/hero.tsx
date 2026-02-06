@@ -78,17 +78,17 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl md:text-7xl"
+                    className="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-6xl md:text-7xl"
                 >
                     {t("hero.title")} <br />
-                    <span className="text-amber-600">{t("hero.subtitle")}</span>
+                    <span className="text-amber-600 dark:text-amber-500">{t("hero.subtitle")}</span>
                 </motion.h1>
 
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="mx-auto mt-6 max-w-2xl text-lg text-slate-600 sm:text-xl"
+                    className="mx-auto mt-6 max-w-2xl text-lg text-slate-600 dark:text-slate-300 sm:text-xl"
                 >
                     {t("hero.description")}
                 </motion.p>
@@ -107,10 +107,10 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                                     initial={{ opacity: 0, y: 10, scale: 0.9 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-8 w-64 p-4 bg-white/90 text-slate-900 rounded-2xl backdrop-blur-xl border border-white/50 shadow-2xl z-20 text-center"
+                                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-8 w-64 p-4 bg-white/90 dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 rounded-2xl backdrop-blur-xl border border-white/60 dark:border-slate-700/60 shadow-2xl z-20 text-center"
                                 >
                                     <p className="text-sm font-medium">{transcript || "Listening..."}</p>
-                                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white/90 rotate-45" />
+                                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white/90 dark:bg-slate-900/90 rotate-45" />
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -148,7 +148,7 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                                 "relative flex h-24 w-24 items-center justify-center rounded-full transition-all duration-500 focus:outline-none z-10",
                                 isListening
                                     ? "bg-gradient-to-br from-amber-500 to-orange-600 text-white shadow-[0_0_40px_-10px_rgba(245,158,11,0.6)] scale-110"
-                                    : "bg-white/80 backdrop-blur-xl border border-white/60 text-amber-600 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:scale-105 hover:bg-white hover:shadow-[0_20px_40px_-10px_rgba(245,158,11,0.2)]"
+                                    : "bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/60 dark:border-slate-700/60 text-amber-600 dark:text-amber-500 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:scale-105 hover:bg-white dark:hover:bg-slate-800 hover:shadow-[0_20px_40px_-10px_rgba(245,158,11,0.2)]"
                             )}
                         >
                             {isListening ? (
@@ -172,7 +172,7 @@ export function Hero({ onVoiceTrigger }: HeroProps) {
                             )}
                         </button>
                     </div>
-                    <p className="mt-6 text-sm font-semibold tracking-wide text-slate-500 uppercase">
+                    <p className="mt-6 text-sm font-semibold tracking-wide text-slate-500 dark:text-slate-400 uppercase">
                         {isListening ? (
                             <span className="text-amber-600 animate-pulse">{t("hero.listening")}</span>
                         ) : (

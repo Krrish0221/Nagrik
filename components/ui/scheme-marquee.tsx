@@ -63,16 +63,16 @@ function SchemeCard({ scheme, content, onClick, buttonText }: { scheme: Scheme; 
     return (
         <div
             onClick={onClick}
-            className="relative flex h-[220px] w-[350px] flex-col justify-between rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:shadow-2xl hover:border-amber-200/30 cursor-pointer"
+            className="relative flex h-[220px] w-[350px] flex-col justify-between rounded-2xl border border-white/20 dark:border-white/10 bg-white/10 dark:bg-slate-900/40 p-6 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/20 dark:hover:bg-slate-800/60 hover:shadow-2xl hover:border-amber-200/30 dark:hover:border-amber-500/30 cursor-pointer"
         >
             <div>
-                <h3 className="mb-2 text-lg font-bold text-slate-900">{content.title}</h3>
-                <div className="mb-3 inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
+                <h3 className="mb-2 text-lg font-bold text-slate-900 dark:text-slate-100">{content.title}</h3>
+                <div className="mb-3 inline-block rounded-full bg-amber-100 dark:bg-amber-900/30 px-3 py-1 text-xs font-bold text-amber-700 dark:text-amber-500">
                     {content.highlight}
                 </div>
-                <p className="text-sm leading-relaxed text-slate-700 line-clamp-2">{content.desc}</p>
+                <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 line-clamp-2">{content.desc}</p>
             </div>
-            <button className="group/btn mt-4 flex items-center gap-2 text-sm font-semibold text-amber-600 transition-colors hover:text-amber-700">
+            <button className="group/btn mt-4 flex items-center gap-2 text-sm font-semibold text-amber-600 dark:text-amber-500 transition-colors hover:text-amber-700 dark:hover:text-amber-400">
                 {buttonText}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" strokeWidth={2.5} />
             </button>
